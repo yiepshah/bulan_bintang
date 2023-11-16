@@ -1,143 +1,132 @@
+<!-- collection.php -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Collection</title>
+<head>
+
 
     <?php
-    
     session_start();
-    
-    $items = array(
-        array(
-            'image' => 'path-to-large-image-1.jpg',
-            'name' => 'Baju Melayu',
-            'price' => 'RM279.99',
-        ),
-        array(
-            'image' => 'path-to-large-image-2.jpg',
-            'name' => 'Another Item',
-            'price' => 'RM149.99',
-        ),
-        // Add more items here
-    );
+
+    $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
+
+    if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    }
+
+    $query = "SELECT item_id, item_name, image_path, price FROM posts"; // Added item_id to the query
+    $result = $mysqli->query($query);
+
+    if (!$result) {
+        die("Error: " . $mysqli->error);
+    }
+
+    $items = array();
+    while ($row = $result->fetch_assoc()) {
+        $items[] = $row;
+    }
     ?>
 
-    <script>
-        function openModal(index) {
-            var modal = document.getElementById("imageModal");
-            var modalImage = document.getElementById("modalImage");
-
-            modal.style.display = "block";
-            modalImage.src = items[index].image;
-        }
-
-        var closeModal = document.getElementById("closeModal");
-        closeModal.onclick = function () {
-            var modal = document.getElementById("imageModal");
-            modal.style.display = "none";
-        }
-    </script>
-
     <style>
-        /* Your custom styles here */
+        /* Your existing styles here */
         body {
-            background-image: url('https://i.etsystatic.com/15611670/r/il/3a6100/1515201072/il_fullxfull.1515201072_4wyu.jpg');
+            background-image: url('your-background-image-url.jpg');
             background-repeat: repeat;
-            background-size: cover;
         }
 
-        .collection {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        #collection {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: darkslategray;
+            margin-top: 50px;
         }
 
         .item {
+            width: 23%;
             margin: 10px;
-            padding: 15px;
-            background-color: white;
-            border-radius: 5px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            width: 200px; /* Set a fixed width for the image container */
+            display: inline-block;
+            vertical-align: top;
         }
 
         .item img {
             max-width: 100%;
-            height: 150px; /* Set a fixed height for the images */
+            height: auto;
         }
 
-        .item h4 {
+        .item p {
             margin-top: 10px;
         }
 
         .item p {
             font-weight: bold;
+            font-size: 16px;
+            color: black;
+            
+            
         }
 
-        .btn-primary {
-            background-color: #007bff;
+        .add-to-cart a {
+            display: block; /* Make the link fill the entire container */
+            text-decoration: none; /* Remove default underline style */
+            color: inherit; /* Use the parent's color */
+        }
+
+        .add-to-cart button {
+            background-color: #000033;
             color: white;
             border: none;
+            padding: 5px 10px;
         }
 
-        .btn-primary:hover {
+        .add-to-cart button:hover {
             background-color: #0056b3;
         }
 
-        #collection{
-        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        color: lightcyan;
-        margin-top: 50px;
+        @media (max-width: 992px) {
+            .item {
+                width: 25%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .item {
+                width: 33.33%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .item {
+                width: 50%;
+            }
+        }
+
+        #detail{
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <?php include('header.php'); ?>
 
-    <div class="container">
-        <h3 id="collection" class="collection">Collection</h3>
-        <div class="collection">
-            <?php
-            // Display items from the $items array
-            foreach ($items as $index => $item) {
-                echo '<div class="item" onclick="openModal(' . $index . ')">';
-                echo '<img src="' . $item['image'] . '" alt="' . $item['name'] . '">';
-                echo '<h4>' . $item['name'] . '</h4>';
-                echo '<p>Price: ' . $item['price'] . '</p>';
-                echo '<button class="btn btn-dark">Add to Cart</button>';
-                echo '</div>';
-            }
-            ?>
-        </div>
-    </div>
+    <div class="">
 
+    <?php
+    foreach ($items as $index => $item) {
+        echo '<div class="item">';
+        echo '<a id = "detail" href="details.php?item_id=' . $item['item_id'] . '">';
+        echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
+        echo '<p>' . $item['item_name'] . '</p>';
+        echo '<p>' . $item['price'] . '</p>';
+        echo '<div class="add-to-cart"><a href="cart.php"><button><i class="fas fa-cart-plus"></i></button></a></div>';
+        echo '</a></div>';
+    }
+    ?>
+
+    </div>
     <?php include('footer.php'); ?>
-
-    <div id="imageModal" class="modal">
-        <span class="close" id="closeModal">&times;</span>
-        <img class="modal-content" id="modalImage">
-    </div>
-
-    <script>
-        var items = <?php echo json_encode($items); ?>;
-
-        function openModal(index) {
-            var modal = document.getElementById("imageModal");
-            var modalImage = document.getElementById("modalImage");
-
-            modal.style.display = "block";
-            modalImage.src = items[index].image;
-        }
-
-        var closeModal = document.getElementById("closeModal");
-        closeModal.onclick = function () {
-            var modal = document.getElementById("imageModal");
-            modal.style.display = "none";
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

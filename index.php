@@ -1,3 +1,6 @@
+<?php session_start();
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +14,8 @@
     
    
 
-    body, html{
-        background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu');
+    body,html{
+        /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
  
         /* background-attachment: fixed; */
     }
@@ -116,15 +119,13 @@
        
     }
 
-    .image-button {
+    #store {
         position: absolute;
         top: 100%; /* Adjust the top position as needed */
         left: 77%; /* Adjust the left position as needed */
-        transform: translate(-50%, -50%);
-        background-color: #003366;
         font-family: sans-serif;
         padding: 10px 30px; /* Adjust the padding as needed */
-        border: none;
+        background: lightslategray;
         border-radius: 5px 10px;
         text-decoration: none;
         font-weight: bold;
@@ -140,7 +141,7 @@
 
 
     <?php
-        session_start(); // Start the session
+        
 
         // Include your header and other content
         include('header.php');
@@ -154,10 +155,8 @@
     
     <div class="first-image">
         <img src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Raya-2023-Baju-Raya-Family.jpg" alt="Big Picture" style="width: 100%; height: auto;">
-        <a href="<?php echo 'collection.php'; ?>">
-            <div class="image-button">
-                Shop Now !
-            </div>
+        <a href="<?php echo isset($_SESSION['user_id']) ? 'collection.php' : 'login.php'; ?>">
+        <i id="store" class="fas fa-shopping-cart">Shop Now</i>
         </a>
     </div>  
 
@@ -172,10 +171,10 @@
     <h3 class="collection">2023 Collection</h3>
     <div class="third-image">
         <div class="image-group">
-            <img id="third-1" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Baju-Melayu-Tailored-Fit-Ash-Blue.jpg" alt="">
-            <img id="third-2" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Baju-Melayu-Tailored-Fit-Ash-Brown.jpg" alt="">
-            <img id="third-3" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Baju-Melayu-Tailored-Fit-Beige.jpg" alt="">
-            <img id="third-4" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Baju-Melayu-Tailored-Fit-Air-Force-Blue.jpg" alt="">
+            <img id="third-1" src="https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/03/SF-2.jpg?resize=800%2C800&ssl=1"  alt="">
+            <img id="third-2" src="https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/02/COVER-CATALOGUE.jpg?resize=800%2C800&ssl=1" alt="">
+            <img id="third-3" src="https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/02/COVER-CATALOGUE-BMK-3.jpg?resize=800%2C800&ssl=1" alt="">
+            <img id="third-4" src="https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/03/KURTA-A-2.jpg?resize=800%2C800&ssl=1" alt="">
         </div>
     </div>
 

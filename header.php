@@ -1,7 +1,8 @@
 <?php
 
 // Remove session_start() from this file.
-// session_start();
+
+    
 
 if (isset($_SESSION['user_id'])) {
     $loginButtonStyle = 'display: none;';
@@ -27,7 +28,7 @@ if (isset($_SESSION['user_id'])) {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #f0f0f0; 
+        background-color:white; 
         padding: 10px; 
     }
 
@@ -41,15 +42,15 @@ if (isset($_SESSION['user_id'])) {
 
    
     .navbar .navbar-nav .nav-item a {
-        color: #003366; 
-        font-weight: 900; 
+        color: #000033; 
+        font-weight: 500; 
         margin-right: 20px;
         text-decoration: none; 
     }
 
     
     .navbar .navbar-nav .nav-item a:hover {
-        color: #003366;
+        color: #000033;
     }
 
     
@@ -57,63 +58,120 @@ if (isset($_SESSION['user_id'])) {
         margin-right: 10px; 
     }
 
-    .navbar-nav {
-        font-weight: 0px;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    }
+  
 
     #loginbutton{
         margin-right: 40px ;
         background-color:#033366 ;
     }
 
-    #addbutton{
-        margin-right: 40px ;
-    }
-
     #logoutbtn{
         margin-right: 10px;
     }
-
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm bg-light navbar-light">
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
                 <img class="logo" src="https://th.bing.com/th/id/OIP.IV6E-NjlfboqXML32zgvtAHaFs?w=247&h=190&c=7&r=0&o=5&pid=1.7" alt="Logo">
-                
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                    <ul class="navbar-nav">
+                <ul class="navbar-nav">
                     <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown">Men</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Link</a></li>
-                        <li><a class="dropdown-item" href="#">Another link</a></li>
-                        <li><a class="dropdown-item" href="#">A third link</a></li>
-                    </ul>
-                    </li>
+                        <a class="nav-link dropdown-toggle" href="collection.php" role="button" data-toggle="dropdown">Men</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="collection.php?category=baju_melayu">BAJU MELAYU</a></li>
+                            <li><a class="dropdown-item" href="collection.php?category=slim_fit">Baju Melayu Slim Fit</a></li>
+                            <li><a class="dropdown-item" href="#">Baju Melayu Tailored Fit</a></li>
+                            <li><a class="dropdown-item" href="#">Baju Melayu Teluk Belanga</a></li>
+                            <li><a class="dropdown-item" href="#">Samping</a></li><hr> 
 
+                            <li><a class="dropdown-item" href="#">KURTA</a></li>
+                            <li><a class="dropdown-item" href="#">kurta A</a></li>
+                            <li><a class="dropdown-item" href="#">kurta B</a></li>
+                            <li><a class="dropdown-item" href="#">kurta C</a></li>
+                            <li><a class="dropdown-item" href="#">kurta D</a></li>
+                            <li><a class="dropdown-item" href="#">kurta E</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown">Women</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Link</a></li>
-                        <li><a class="dropdown-item" href="#">Another link</a></li>
-                        <li><a class="dropdown-item" href="#">A third link</a></li>
+                        <li><a class="dropdown-item" href="#">GLAM SILVER</a></li>
+                        <li><a class="dropdown-item" href="#">Adeline</a></li>
+                        <li><a class="dropdown-item" href="#">Alyssa</a></li>
+                        <li><a class="dropdown-item" href="#">Amy</a></li>
+                        <li><a class="dropdown-item" href="#">Camelia</a></li>
+                        <li><a class="dropdown-item" href="#">Dayana</a></li>
+                        <li><a class="dropdown-item" href="#">Elyana</a></li>
+                        <li><a class="dropdown-item" href="#">Jessica</a></li>
+                        <li><a class="dropdown-item" href="#">Lana</a></li>
+                        <li><a class="dropdown-item" href="#">Marsha</a></li>
+                        <li><a class="dropdown-item" href="#">Tyra</a></li> <hr>
+                        <li><a class="dropdown-item" href="#">Glam Gold</a></li>
+                        <li><a class="dropdown-item" href="#">Alicia</a></li>
+                        <li><a class="dropdown-item" href="#">Emelda</a></li>
+                        <li><a class="dropdown-item" href="#">Elisya</a></li>
+                        <li><a class="dropdown-item" href="#">Emma</a></li>
+                        <li><a class="dropdown-item" href="#">Fasha</a></li>
+                        <li><a class="dropdown-item" href="#">Ladyyana</a></li>
+                        <li><a class="dropdown-item" href="#">Olivia</a></li>
+                        <li><a class="dropdown-item" href="#">Sabrina</a></li>
+                        <li><a class="dropdown-item" href="#">Victoria</a></li><hr>
+                        <li><a class="dropdown-item" href="#">GLAM PLATINUM</a></li>
+                        <li><a class="dropdown-item" href="#">Ariana</a></li>
+                        <li><a class="dropdown-item" href="#">Dayang</a></li>
+                        <li><a class="dropdown-item" href="#">Deanna</a></li>
+                        <li><a class="dropdown-item" href="#">Delisha</a></li><hr>
+                        <li><a class="dropdown-item" href="#">LUXE SILVER</a></li>
+                        <li><a class="dropdown-item" href="#">Amely</a></li>
+                        <li><a class="dropdown-item" href="#">Anna</a></li>
+                        <li><a class="dropdown-item" href="#">Adriana</a></li>
+                        <li><a class="dropdown-item" href="#">Bella</a></li>
+                        <li><a class="dropdown-item" href="#">Betty</a></li>
+                        <li><a class="dropdown-item" href="#">Hanna</a></li>
+                        <li><a class="dropdown-item" href="#">Janna</a></li>
+                        <li><a class="dropdown-item" href="#">Lisa</a></li>
+                        <li><a class="dropdown-item" href="#">Marisa</a></li>
+                        <li><a class="dropdown-item" href="#">Nelissa</a></li>
+                        <li><a class="dropdown-item" href="#">Nelydia</a></li>
+                        <li><a class="dropdown-item" href="#">Sally</a></li><hr>
+                        <li><a class="dropdown-item" href="#">LUXE BRONZE</a></li>
+                        <li><a class="dropdown-item" href="#">Dynass</a></li>
+                        <li><a class="dropdown-item" href="#">Farah</a></li>
+                        <li><a class="dropdown-item" href="#">Nabila</a></li>
+                        <li><a class="dropdown-item" href="#">Natalie</a></li>
+                        <li><a class="dropdown-item" href="#">Reena</a></li><hr>
+                        <li><a class="dropdown-item" href="#">LUXE GOLD</a></li>
+                        <li><a class="dropdown-item" href="#">Elly</a></li>
+                        <li><a class="dropdown-item" href="#">Joanna</a></li>
+                        <li><a class="dropdown-item" href="#">Leyna</a></li>
+                        <li><a class="dropdown-item" href="#">Amelia</a></li>
+                        <li><a class="dropdown-item" href="#">Suzy</a></li>
                     </ul>
                     </li>
 
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown">Kids</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Link</a></li>
-                        <li><a class="dropdown-item" href="#">Another link</a></li>
-                        <li><a class="dropdown-item" href="#">A third link</a></li>
+                        <li><a class="dropdown-item" href="#">BAJU MELAYU KIDS</a></li>
+                        <li><a class="dropdown-item" href="#">Baju Melayu Kids</a></li><hr>
+                        <li><a class="dropdown-item" href="#">GLAM KIDS</a></li>
+                        <li><a class="dropdown-item" href="#">Adeline</a></li>
+                        <li><a class="dropdown-item" href="#">Alyssa</a></li>
+                        <li><a class="dropdown-item" href="#">Ariana</a></li>
+                        <li><a class="dropdown-item" href="#">Camelia</a></li>
+                        <li><a class="dropdown-item" href="#">Dayang</a></li>
+                        <li><a class="dropdown-item" href="#">Dynas</a></li>
+                        <li><a class="dropdown-item" href="#">Eleena</a></li>
+                        <li><a class="dropdown-item" href="#">Emelda</a></li>
+                        <li><a class="dropdown-item" href="#">Emma</a></li>
+                        
                     </ul>
                     </li>
 
@@ -139,48 +197,83 @@ if (isset($_SESSION['user_id'])) {
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown">SALE</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Link</a></li>
-                        <li><a class="dropdown-item" href="#">Another link</a></li>
-                        <li><a class="dropdown-item" href="#">A third link</a></li>
+                        <li><a class="dropdown-item" href="#">BRIDAL</a></li>
+                        <li><a class="dropdown-item" href="#">Thea</a></li>
+                        <li><a class="dropdown-item" href="#">Halley</a></li>
+                        <li><a class="dropdown-item" href="#">Elara</a></li>
+                        <li><a class="dropdown-item" href="#">Lilith</a></li>
+                        <li><a class="dropdown-item" href="#">Aurora</a></li>
+                        <li><a class="dropdown-item" href="#">Nova</a></li>
+                        <li><a class="dropdown-item" href="#">Delilah</a></li>
+                        <li><a class="dropdown-item" href="#">Zania</a></li>
+                        <li><a class="dropdown-item" href="#">Ayra</a></li>
+                        <li><a class="dropdown-item" href="#">Alya</a></li>
+                        <li><a class="dropdown-item" href="#">Juliet</a></li>
+                        <li><a class="dropdown-item" href="#">Freya</a></li>
+                        <li><a class="dropdown-item" href="#">Bianca</a></li>
+                        <li><a class="dropdown-item" href="#">Athena</a></li>
+                        <li><a class="dropdown-item" href="#">Laryssa</a></li><hr>
+                        <li><a class="dropdown-item" href="#">SISTERS</a></li>
+                        <li><a class="dropdown-item" href="#">Zahra</a></li>
+                        <li><a class="dropdown-item" href="#">Halima</a></li>
+                        <li><a class="dropdown-item" href="#">Kenanga</a></li>
+                        <li><a class="dropdown-item" href="#">Hana</a></li>
+                        <li><a class="dropdown-item" href="#">Aina</a></li>
+                        <li><a class="dropdown-item" href="#">Wardah</a></li>
+                        <li><a class="dropdown-item" href="#">Lily</a></li>
+                        <li><a class="dropdown-item" href="#">Suri</a></li>
+                        <li><a class="dropdown-item" href="#">Laila</a></li>
                     </ul>
                     </li>   
                 </ul>
             </div>
 
-            <a id="addbutton" class="btn btn-secondary" href="add_item.php" style="color: #f0f0f0;">Add Item</a>
-
-
-            <a id="loginbutton" class="btn btn-secondary" href="login.php" style="<?php echo $loginButtonStyle; ?>">Login</a>
-
-
-            <a id="logoutbtn" class="btn btn-secondary" href="logout.php" style="<?php echo $logoutButtonStyle; ?>">Logout</a>
             
-            
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="collection.php" id="shopping">
-                            <i class="fas fa-shopping-bag"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.php" id="shopping">
-                            <i class="fas fa-user"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.php" id="cart">
-                            <i class="fas fa-shopping-cart"></i>
-                        </a>
-                    </li>
+
+        
+           
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Log Out">
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        // User is logged in, show logout icon
+                        echo '<a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
+                    }
+                    ?>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
+                </li>
+                <!-- <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Shop">
+                    <a class="nav-link" href="collection.php" id="shopping" style="<?php echo isset($_SESSION['user_id']) ? '' : 'display: none;'; ?>">
+                        <i class="fas fa-shopping-bag"></i>
+                    </a>
+                </li> -->
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Profile">
+                    <?php
+                    if (isset($_SESSION['user_id'])) {
+                        // User is logged in, show user profile icon
+                        echo '<a class="nav-link" href="profile.php"><i class="fas fa-user"></i></a>';
+                    } else {
+                        // User is not logged in, show login icon
+                        echo '<a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i></a>';
+                    }
+                    ?>
+                </li>
+
+
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Cart">
+                    <a class="nav-link" href="cart.php" id="cart" style="<?php echo isset($_SESSION['user_id']) ? '' : 'display: none;'; ?>">
+                        <i class="fas fa-shopping-cart"></i>
+                    </a>
+                </li>
             </ul>
-
-        </div>
+                </div>
     </nav>
+                    
 
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

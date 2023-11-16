@@ -49,15 +49,17 @@
     <style>
 
         body{
-            background-image: url('https://images.pexels.com/photos/1788961/pexels-photo-1788961.jpeg?cs=srgb&dl=pexels-1788961.jpg&fm=jpg');
+            /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
+            background-image: url('https://bulanbintang.onpay.my/media/uploads/majestic%20black2.jpg');
             background-size: cover;
+            
             
         }
         .container{
-            background-color: darkslategrey;
-            margin-top: 200px;
+            background-color: rgba(211, 211, 211, 0.5);
+            margin-top: 150px;
             border-radius: 30px 30px;
-            color: white;
+            
             
         }
 
@@ -99,15 +101,14 @@
                     </div>
 
                     <a class="btn btn-warning" id="loginlink" href="login.php">Login</a>
-                    <button type="submit" class="btn btn-dark">Submit</button>
-
-                   
+                    <button type="submit" class="btn btn-dark">Submit</button><br><br>
                 </form>
             </div>
         </div>
+        
+    <?php include('footer.php') ?>
     </div>
     
-    <?php include('footer.php') ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

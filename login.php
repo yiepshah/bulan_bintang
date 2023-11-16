@@ -1,3 +1,6 @@
+<?php session_start();
+    ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +11,7 @@
     <title>Log in</title>
 
     <?php
-session_start(); // Start a PHP session
+
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -29,33 +32,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    // Retrieve user data from the database
-    $sql = "SELECT * FROM users WHERE email='$email'";
-    $result = mysqli_query($conn, $sql);
+// Retrieve user data from the database
+$sql = "SELECT * FROM users WHERE email='$email'";
+$result = mysqli_query($conn, $sql);
 
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
+// Check if there are any rows in the result
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
 
-            // Verify the entered password with the hashed password in the database
-            if (password_verify($password, $row['password'])) {
-                $_SESSION['user_id'] = $row['id']; // Store user ID in the session
-                header("Location: index.php");
-                
-                 // Redirect to a welcome page
-                exit();
-            } else {
-                $error = "Invalid email or password.";
-            }
+    // Verify the entered password with the hashed password in the database
+    if (password_verify($password, $row['password'])) {
+        $_SESSION['user_id'] = $row['id']; // Store user ID in the session
+
+        // Check the role of the user
+        if ($row['role'] === 'admin') {
+            header("Location: adminpage.php"); // Redirect to the admin page
         } else {
-            $error = "Invalid email or password.";
+            header("Location: index.php"); // Redirect to a regular user page
         }
-    } else {
-        $error = "Error: " . mysqli_error($conn);
-    }
 
-    // Close the database connection
-    mysqli_close($conn);
+        // Redirect to a welcome page
+        exit();
+    } else {
+        $error = "Invalid email or password.";
+    }
+} else {
+    $error = "Invalid email or password.";
+}
+
+// Close the database connection
+mysqli_close($conn);
+
 }
 ?>
 
@@ -64,16 +71,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         
         body{
-            background-image: url('https://media.giphy.com/media/qr4zmfngHHn0c/giphy.gif');
+            /* background-image: url('https://media.giphy.com/media/qr4zmfngHHn0c/giphy.gif'); */
+            /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
+            background-image: url('https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/02/USP-BMK-1-1.jpg?resize=2000%2C2000&ssl=1');
+            background-size: cover;
        
         }
-        .container{
-            background-color: darkslategrey;
+        .container {
+            background-color: rgba(211, 211, 211, 0.5); /* Adjust the alpha value (0.8) as needed */
             padding: 30px;
             border-radius: 20px 20px;
             margin-top: 200px;
-            color: white;
+            
         }
+
 
         .email{
             width: 290px;
@@ -86,13 +97,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         #signuplink{
-            color: black;
             margin-right: 30px;
             
         }
 
         #lesgo{
-            color: lightgray;
+            
             font-family: sans-serif;
             margin-top: 30px;
         }
@@ -123,10 +133,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     
-                    
-                    <a class="btn btn-warning"  id="signuplink" href="signup.php">Signup</a>
+                    <p style="font-family: cursive;">New to Bulan Bintang?</p>
+                    <a class="btn btn-dark"  id="signuplink" href="signup.php">Signup</a>
 
-                    <button type="submit" class="btn btn-dark">Submit</button>
+                    <button type="submit" class="btn btn-warning">Enter</button>
                     <h1 id="lesgo">Let's Go !</h1>
                 </form>
             </div>
