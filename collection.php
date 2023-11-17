@@ -63,9 +63,7 @@
         .item p {
             font-weight: bold;
             font-size: 16px;
-            color: black;
-            
-            
+            color: black;        
         }
 
         .add-to-cart a {
@@ -121,6 +119,7 @@
         echo '<p>' . $item['item_name'] . '</p>';
         echo '<p>' . $item['price'] . '</p>';
         echo '<div class="add-to-cart"><a href="cart.php"><button><i class="fas fa-cart-plus"></i></button></a></div>';
+
         echo '</a></div>';
     }
     ?>

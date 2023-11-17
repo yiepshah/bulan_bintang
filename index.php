@@ -14,11 +14,11 @@
     
    
 
-    body,html{
+    /* body,html{  */
         /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
  
         /* background-attachment: fixed; */
-    }
+    /* } */
     
     .image-container {
         display: flex; 

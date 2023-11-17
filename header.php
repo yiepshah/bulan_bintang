@@ -1,15 +1,38 @@
 <?php
 
-// Remove session_start() from this file.
+// Include the file with the database connection function
+include('config.php');
 
-    
+// Check if 'id' is set in the query parameters
+if (isset($_GET['id'])) {
+    $categoryId = (int)$_GET['id'];
 
-if (isset($_SESSION['user_id'])) {
-    $loginButtonStyle = 'display: none;';
-    $logoutButtonStyle = 'display: inline-block;';
+    // Fetch products based on the selected category
+    $mysqli = connectDatabase(); // Assuming connectDatabase() is defined in your database file
+    echo "SELECT * FROM posts WHERE category_id = $categoryId";
+    $result = $mysqli->query("SELECT * FROM posts WHERE category_id = $categoryId");
+
+    if (!$result) {
+        echo "Error: " . $mysqli->error;
+    }
+
+    $stmt = $mysqli->prepare("SELECT * FROM posts WHERE category_id = ?");
+    $stmt->bind_param("i", $categoryId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Display products
+    while ($row = $result->fetch_assoc()) {
+        echo '<div>';
+        echo '<h2>' . $row['item_name'] . '</h2>';
+        // Add more product information as needed
+        echo '</div>';
+    }
+
+    $mysqli->close(); // Close the database connection
 } else {
-    $loginButtonStyle = 'display: inline-block';
-    $logoutButtonStyle = 'display: none;';
+    // Handle cases where no category is selected
+    ;
 }
 ?>
 
@@ -82,6 +105,21 @@ if (isset($_SESSION['user_id'])) {
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
+                    
+                <?php
+                    // Fetch categories from the database
+                    $mysqli = connectDatabase(); // Ensure you have the connectDatabase() function
+                    $result = $mysqli->query("SELECT * FROM categories"); // Assuming you have a 'categories' table
+
+                    while ($row = $result->fetch_assoc()) {
+                        $categoryId = $row['category_id'];
+                        $categoryName = $row['category_name'];
+                        echo '<li class="nav-item"><a class="nav-link" href="category.php?id=' . $categoryId . '">' . $categoryName . '</a></li>';
+                    }
+
+                    $mysqli->close();
+                    ?>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="collection.php" role="button" data-toggle="dropdown">Men</a>
                         <ul class="dropdown-menu">
