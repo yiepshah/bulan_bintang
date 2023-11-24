@@ -1,8 +1,10 @@
 <?php session_start();
-    ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -40,7 +42,7 @@
         color: #003366;
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         margin-left: 30px;
-        margin-top: 40px;
+        margin-top: 0px;
     }
 
     .dropdown-item{
@@ -68,39 +70,25 @@
         }
     }
 
-    #third-1{
-        margin-left: 0px;
+    #third-1{       
         margin-top: 40px;
-        width: 900px;
-        border-radius: 20px 30px;
-        margin-right:0px;
+        width: 930px;     
     }
 
-    #third-2{
-        margin-left: 40px;
+    #third-2{    
         margin-top: 40px;
-        width: 900px;
-        margin-right: 20px;
-        border-radius: 20px 30px;
-        margin-right: 0px;
+        width: 930px;
+        
     }
 
-    #third-3{
-        margin-left: 0px;
+    #third-3{    
         margin-top: 40px;
-        width: 900px;
-        margin-right: 20px;
-        border-radius: 20px 30px;
-        margin-right: 0px;
+        width: 930px;    
     }
 
-    #third-4{
-        margin-left: 40px;
+    #third-4{   
         margin-top: 40px;
-        width: 900px;
-        margin-right: 20px;
-        border-radius: 20px 30px;
-        margin-right: 0px;
+        width: 930px;     
     }
 
     .boutique{
@@ -114,24 +102,40 @@
     .footer{
         font-family: Arial, Helvetica, sans-serif;
         font-size: medium;
-        font-weight: bold;
-
-       
+        font-weight: bold;      
     }
 
     #store {
-        position: absolute;
-        top: 100%; /* Adjust the top position as needed */
-        left: 77%; /* Adjust the left position as needed */
-        font-family: sans-serif;
-        padding: 10px 30px; /* Adjust the padding as needed */
-        background: lightslategray;
-        border-radius: 5px 10px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 21px;
-        color: lightyellow;
+        
+    position: absolute;
+    top: 100%; /* Adjust the top position as needed */
+    left: 77%; /* Adjust the left position as needed */
+    font-family: sans-serif;
+    padding: 10px 30px; /* Adjust the padding as needed */
+    background: transparent; /* Set background to transparent */
+    border: 1px solid #fff; /* Add border for visibility */
+    border-radius: 5px 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 41px;
+    color: #fff; /* Set text color to white */
+}
       
+    
+
+    .custom-image {
+        max-width: 100%;
+        height:auto; /* Set a fixed height as needed */
+        width: 100%;
+        border-radius: 10px; /* Add border-radius if you want rounded corners */
+    }
+
+    .carousel-indicators button,
+    .carousel-control-prev,
+    .carousel-control-next {
+        background-color: transparent;
+        border: none;
+        color: #000; /* Set the color as needed */
     }
     
 
@@ -140,25 +144,50 @@
     
 
 
-    <?php
+
+
+   
+</style>
+</head>
+<body>
+<?php
         
 
         // Include your header and other content
         include('header.php');
         // ...
     ?>
+<div id="carouselExample" class="carousel slide" data-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+  </div>
 
-   
-</style>
-</head>
-<body>
-    
-    <div class="first-image">
-        <img src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Raya-2023-Baju-Raya-Family.jpg" alt="Big Picture" style="width: 100%; height: auto;">
-        <a href="<?php echo isset($_SESSION['user_id']) ? 'collection.php' : 'login.php'; ?>">
-        <i id="store" class="fas fa-shopping-cart">Shop Now</i>
-        </a>
-    </div>  
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="custom-image" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Raya-2023-Baju-Raya-Family.jpg" class="" alt="">
+    </div>
+    <div class="carousel-item">
+      <img class="custom-image" src="https://cdn.store-assets.com/s/1183357/f/10198896.jpg">
+    </div>
+    <div class="carousel-item">
+      <img class="custom-image" src="https://cdn.store-assets.com/s/859197/f/9740202.jpg?width=1500" class="" alt="">
+    </div>
+  </div>
+  
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<a href="<?php echo isset($_SESSION['user_id']) ? 'collection.php' : 'login.php'; ?>">
+    <i id="store" class="fas fa-shopping-cart">SHOP NOW !</i>
+</a>
+
 
     <h3 class="collection">Brothers Collection</h3>
     <div class="image-container">
@@ -176,7 +205,7 @@
             <img id="third-3" src="https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/02/COVER-CATALOGUE-BMK-3.jpg?resize=800%2C800&ssl=1" alt="">
             <img id="third-4" src="https://i0.wp.com/bulanbintanghq.com/wp-content/uploads/2023/03/KURTA-A-2.jpg?resize=800%2C800&ssl=1" alt="">
         </div>
-    </div>
+    </div><br><br>
 
     <h3 class="collection">Visit Our Official Boutique</h3>
 
@@ -249,7 +278,7 @@
     </div>
 
 
-    <div style="background-color: #000033;color: #fff; padding: 60px;">
+    <div style="background-color: #12122f;color: #fff; padding: 60px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
@@ -289,8 +318,9 @@
 
     <?php include('footer.php'); ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </html>
 
 

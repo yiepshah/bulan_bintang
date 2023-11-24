@@ -274,12 +274,12 @@
 
 <div class="w3-sidebar">
     <a href="adminpage.php" class="w3-bar-item w3-button" title="Home"><i class="fa fa-home"></i></a>
-    <a href="#" class="w3-bar-item w3-button" title="Search"><i class="fa fa-search"></i></a>
+    
     <a href="collection.php" class="w3-bar-item w3-button" title="Store"><i class="fas fa-store"></i></a>
-    <a href="#" class="w3-bar-item w3-button" title="Global"><i class="fa fa-globe"></i></a>
+   
     <?php
 
-    // Check if the user is logged in to display the "Add Item" icon
+ 
     if (isset($_SESSION['user_id'])) {
         echo '<a class="nav-link" title="Add Item" href="add_item.php"><i class="fas fa-plus"></i></a>';
     }
@@ -302,7 +302,7 @@
                 <i class="fa-solid fa-search"></i>
                 <input type="text" placeholder="Search">
             </div>
-            <img id="profileimg" src="https://th.bing.com/th/id/R.a8a6628d5333ee3f8e6974f0d6db2eb2?rik=UHr8iewxIv2A%2bA&riu=http%3a%2f%2f3.bp.blogspot.com%2f-PnhueZwPFu8%2fTdFP7dW9d3I%2fAAAAAAAAADU%2fzBTmS5vlTwE%2fs1600%2fBrad%25252520Pitt%25252520and%25252520Angelina%25252520Jolie%25252520could%25252520be%25252520latest%25252520couple%25252520cursed%25252520at%25252520the%25252520Oscars.jpg&ehk=%2feRJVNLEnA0focvq5yxLlSqEfiQkSI8lGL3eV6QtQ38%3d&risl=&pid=ImgRaw&r=0" alt="">
+           
         </div>
     </div>
 
@@ -341,23 +341,24 @@
                     <span class="card-detail">Last 24 hours</span>
                 </div>
             </div>
-        </div> <hr>
+        </div> <hr> 
+
 
         <div class="stock-table-container">
             <h2 class="main--title">Update Stocks</h2>
-            <table class="stock-table table table-striped">
+            <div class="table-responsive">
+                <table class="stock-table table table-striped">
                 <thead class="thead-dark">
                     <tr>
                         <th>Item Name</th>
-                        <th>Price</th>                      
+                        <th>Price</th>
                         <th>Material</th>
                         <th>Product Information</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
-<?php
+            <tbody>
+            <?php
 function connectDatabase() {
     $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
     if ($mysqli->connect_error) {
@@ -368,14 +369,14 @@ function connectDatabase() {
 
 
 
-// Fetch items from the database and display them in the table
+
 $mysqli = connectDatabase();
 
-$selectQuery = "SELECT * FROM posts ORDER BY item_id DESC"; // Order by ID in descending order to show the latest updates first
+$selectQuery = "SELECT * FROM posts ORDER BY item_id DESC"; 
 $result = $mysqli->query($selectQuery);
 ?>
 
-<!-- HTML and CSS code here -->
+
 
 <?php
 if ($result && $result->num_rows > 0) {
@@ -383,13 +384,13 @@ if ($result && $result->num_rows > 0) {
         echo "<tr>";
         echo "<td>" . $row['item_name'] . "</td>";
         echo "<td>$" . $row['price'] . "</td>";
-        // Check if 'product_info' key exists before accessing it
+      
         echo "<td>" . $row['material'] . "</td>";
         echo "<td>" . (isset($row['product_information']) ? htmlspecialchars($row['product_information']) : "") . "</td>";
         echo "<td>";
-        // Edit button can be linked to the edit page with item ID, for example: edit_item.php?id=$row['id']
+      
         echo "<button class='edit-button' onclick='editItem(" . $row['item_id'] . ")'>Edit</button>"; 
-        // Add a confirmation dialog before deleting
+        
         echo "<button class='delete-button' onclick='confirmDelete(" . $row['item_id'] . ")'>Delete</button>";
         echo "</td>";
         echo "</tr>";
@@ -401,32 +402,17 @@ if ($result && $result->num_rows > 0) {
 $mysqli->close();
 ?>
 
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-
-
 <script>
     function confirmDelete(itemId) {
         var confirmDelete = confirm("Are you sure you want to delete this item?");
         if (confirmDelete) {
-            // If the user confirms deletion, redirect to the delete_item.php page with the item ID
+            
             window.location.href = "delete_item.php?id=" + itemId;
         }
     }
 
     function editItem(itemId) {
-        // You can redirect to the edit_item.php page with the item ID for editing
+        
         window.location.href = "edit_item.php?id=" + itemId;
     }
 </script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
-</html>

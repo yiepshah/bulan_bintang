@@ -36,65 +36,63 @@ if (isset($_GET['id'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>Document</title>
-
 
     <style>
-         .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color:white; 
-        padding: 10px; 
-    }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            padding: 10px;
+        }
 
-    .logo {
-        height: 62px;
-    }
+        .logo {
+            height: 62px;
+        }
 
-    .nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-}
+        .navbar .navbar-nav .nav-item a {
+            color: #000033;
+            font-weight: 500;
+            margin: 10px;
+            text-decoration: none;
+        }
 
-   
-    .navbar .navbar-nav .nav-item a {
-        color: #000033; 
-        font-weight: 500; 
-        margin-right: 20px;
-        text-decoration: none; 
-    }
+        .navbar .navbar-nav .nav-item a:hover {
+            color: #000033;
+        }
 
-    
-    .navbar .navbar-nav .nav-item a:hover {
-        color: #000033;
-    }
+        .navbar .navbar-nav .nav-item i {
+            margin-right: 10px;
+        }
 
-    
-    .navbar .navbar-nav .nav-item i {
-        margin-right: 10px; 
-    }
+        #loginbutton {
+            margin-right: 40px;
+            background-color: #033366;
+        }
 
-  
+        #logoutbtn {
+            margin-right: 10px;
+        }
 
-    #loginbutton{
-        margin-right: 40px ;
-        background-color:#033366 ;
-    }
+        @media (max-width: 991px) {
+            .navbar .navbar-nav {
+                flex-direction: row;
+            }
 
-    #logoutbtn{
-        margin-right: 10px;
-    }
+            .navbar .navbar-nav .nav-item {
+                margin-right: 10px;
+            }
+
+            .navbar .navbar-nav .nav-item:last-child {
+                margin-right: 0;
+            }
+
+            .navbar .navbar-nav .nav-item i {
+                margin-right: 5px;
+            }
+        }
     </style>
-</head>
-
-<body>
+    
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
@@ -272,7 +270,7 @@ if (isset($_GET['id'])) {
            
             <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Log Out">
+                <li class="nav-item" data-toggle="tooltip"   title="Log Out">
                     <?php
                     if (isset($_SESSION['user_id'])) {
                         // User is logged in, show logout icon
@@ -289,29 +287,38 @@ if (isset($_GET['id'])) {
                         <i class="fas fa-shopping-bag"></i>
                     </a>
                 </li> -->
-                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Profile">
+       
+                <!-- Add this code to display the cart count in your navbar -->
+                <li class="nav-item">
+                    <?php
+                    $cartCount = isset($_SESSION["cart"]) ? count($_SESSION["cart"]) : 0;
+                    ?>
+                    <a href="cart.php" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge badge-pill badge-primary"><?php echo $cartCount; ?></span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="shop">
+                    <a class="nav-link" href="collection.php" id="cart" style="<?php echo isset($_SESSION['user_id']) ? '' : 'display: none;'; ?>">
+                    <i class="fas fa-store"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip"  >
                     <?php
                     if (isset($_SESSION['user_id'])) {
                         // User is logged in, show user profile icon
-                        echo '<a class="nav-link" href="profile.php"><i class="fas fa-user"></i></a>';
+                        echo '<a class="nav-link" data-placement="bottom" title="profile" href="profile.php"><i class="fas fa-user"></i></a>';
                     } else {
                         // User is not logged in, show login icon
-                        echo '<a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i></a>';
+                        echo '<a class="nav-link" data-placement="bottom" title="login" href="login.php"><i class="fas fa-sign-in-alt"></i></a>';
                     }
                     ?>
                 </li>
 
-
-                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Cart">
-                    <a class="nav-link" href="cart.php" id="cart" style="<?php echo isset($_SESSION['user_id']) ? '' : 'display: none;'; ?>">
-                        <i class="fas fa-shopping-cart"></i>
-                    </a>
-                </li>
             </ul>
-                </div>
+                
     </nav>
-                    
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
-</html>
+     
