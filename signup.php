@@ -70,7 +70,7 @@ session_start();
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         // Insert user data into the database
-        $sql = "INSERT INTO users (name, email, password) VALUES ('$username', '$email', '$hashedPassword')";
+        $sql = "INSERT INTO users (user_id ,name, email, password) VALUES ('$username', '$email', '$hashedPassword')";
 
         if (mysqli_query($conn, $sql)) {
             // Redirect to signup page with showAlert parameter for success

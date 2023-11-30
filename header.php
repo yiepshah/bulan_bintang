@@ -1,14 +1,14 @@
 <?php
 
-// Include the file with the database connection function
+
 include('config.php');
 
-// Check if 'id' is set in the query parameters
+
 if (isset($_GET['id'])) {
     $categoryId = (int)$_GET['id'];
 
-    // Fetch products based on the selected category
-    $mysqli = connectDatabase(); // Assuming connectDatabase() is defined in your database file
+
+    $mysqli = connectDatabase(); 
     echo "SELECT * FROM posts WHERE category_id = $categoryId";
     $result = $mysqli->query("SELECT * FROM posts WHERE category_id = $categoryId");
 
@@ -21,17 +21,17 @@ if (isset($_GET['id'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Display products
+
     while ($row = $result->fetch_assoc()) {
         echo '<div>';
         echo '<h2>' . $row['item_name'] . '</h2>';
-        // Add more product information as needed
+
         echo '</div>';
     }
 
-    $mysqli->close(); // Close the database connection
+    $mysqli->close();
 } else {
-    // Handle cases where no category is selected
+  
     ;
 }
 ?>
@@ -63,6 +63,11 @@ if (isset($_GET['id'])) {
 
         .navbar .navbar-nav .nav-item i {
             margin-right: 10px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .navbar .navbar-nav .nav-item i:hover{
+            transform: scale(1.4);
         }
 
         #loginbutton {
@@ -105,9 +110,9 @@ if (isset($_GET['id'])) {
                 <ul class="navbar-nav">
                     
                 <?php
-                    // Fetch categories from the database
-                    $mysqli = connectDatabase(); // Ensure you have the connectDatabase() function
-                    $result = $mysqli->query("SELECT * FROM categories"); // Assuming you have a 'categories' table
+                   
+                    $mysqli = connectDatabase(); 
+                    $result = $mysqli->query("SELECT * FROM categories"); 
 
                     while ($row = $result->fetch_assoc()) {
                         $categoryId = $row['category_id'];
@@ -283,7 +288,7 @@ if (isset($_GET['id'])) {
                     <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
                 </li>
                 <!-- <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Shop">
-                    <a class="nav-link" href="collection.php" id="shopping" style="<?php echo isset($_SESSION['user_id']) ? '' : 'display: none;'; ?>">
+                    <a class="nav-link" href="collection.php" id="shopping" style="">
                         <i class="fas fa-shopping-bag"></i>
                     </a>
                 </li> -->

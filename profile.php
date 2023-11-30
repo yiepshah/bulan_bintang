@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -17,19 +18,34 @@ $query = "SELECT * FROM users WHERE id = ?";
 $stmt = $mysqli->prepare($query);
 
 if ($stmt === false) {
-    die('Error: ' . $mysqli->error);
+    die('Error preparing statement: ' . $mysqli->error);
 }
 
 $stmt->bind_param("i", $userId);
 
 if (!$stmt->execute()) {
-    die('Error: ' . $stmt->error);
+    die('Error executing statement: ' . $stmt->error);
 }
 
 $result = $stmt->get_result();
 
+if (!$result) {
+    die('Error getting result: ' . $stmt->error);
+}
+
+$stmt->close(); 
+
+if ($result) {
+    $result->close(); 
+}
+
+if ($mysqli->ping()) {
+    $mysqli->close(); 
+}
+
 include('header.php');
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,15 +58,21 @@ include('header.php');
 
 
      <style>
-        body,html{
-            background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu');
+        body {
+            /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
         }   
         .card{
             border-radius: 10px;
             color: #e6ddd8;
-            background-color: darkslategrey;
-            margin-top: 200px;
+            background-color: black;
+            margin-top: 100px;
         }
+
+        #profileImg{
+            width: 300px;
+        }
+
+        
      </style>
 </head>
 <body>
@@ -62,12 +84,21 @@ include('header.php');
                     <div class="card-header">
                         <h2>User Profile</h2>
                     </div>
+                    <img id="profileImg" src="https://th.bing.com/th/id/OIP.rLve_Yze-hD3DIOwtjDrBgHaKW?rs=1&pid=ImgDetMain" alt="dv">
                     <div class="card-body">
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <div class="profile-info">
+                    <div class="profile-info">
+                    
+                            <div>            
                                 <p><strong>Name:</strong> <?php echo $row['name']; ?></p>
                                 <p><strong>Email:</strong> <?php echo $row['email']; ?></p>
+                                <p><strong>Status:</strong> <?php echo $row['email']; ?></p>
+                                <p><strong>Register Date:</strong> <?php echo $row['email']; ?></p>
+
+                                
                             </div>
+                        
+                        <?php while ($row = $result->fetch_assoc()): ?>
+
                         <?php endwhile; ?>
                     </div>
                 </div>
@@ -76,16 +107,10 @@ include('header.php');
     </div>
 
     <?php
-$stmt->close(); // Close the statement first
+    include('footer.php');
+   
+    ?>
 
-if ($result) {
-    // Close the result set
-    $result->close();
-}
-
-$mysqli->close(); // Close the connection afterward
-include('footer.php');
-?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

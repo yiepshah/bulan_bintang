@@ -37,8 +37,6 @@
         body {
             background-image: url('your-background-image-url.jpg');
             background-repeat: repeat;
-            margin: 0;
-            padding: 0;
         }
 
         #collection {
@@ -51,6 +49,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between; 
+            margin-top: 20px;
         }
 
         .item {
@@ -59,20 +58,23 @@
             display: inline-block;
             vertical-align: top;
             background-color: #fff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 10px;
             transition: box-shadow 0.3s ease; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            
         }
 
         .item img {
             max-width: 100%;
             height: auto;
+            border-radius: 5px 5px;
         }
 
         .item p {
             margin-top: 10px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             color: black;
         }
 
@@ -94,7 +96,7 @@
         }
 
         .item:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /
+            box-shadow: 0 0 20px rgba(0, 0, 0, 1.0); /
         }
 
         #detail {
@@ -105,7 +107,8 @@
             background-color: transparent; /* Set the background color to transparent */
             color: #000033;
             border: none;
-            padding: 5px 10px;
+            padding: 1px;
+            
         }
 
         .add-to-cart button:hover {

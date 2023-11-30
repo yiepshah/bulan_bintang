@@ -5,9 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <?php session_start();
     ?>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myItemtable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            });
+    </script>
+    
     <style>
         body {
             margin: 0;
@@ -300,7 +311,7 @@
         <div class="user--info">
             <div class="search--box">
                 <i class="fa-solid fa-search"></i>
-                <input type="text" placeholder="Search">
+                <input id="myInput" type="text" placeholder="Search">
             </div>
            
         </div>
@@ -357,7 +368,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-            <tbody>
+            <tbody id="myItemtable">
             <?php
 function connectDatabase() {
     $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
@@ -377,20 +388,16 @@ $result = $mysqli->query($selectQuery);
 ?>
 
 
-
 <?php
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>" . $row['item_name'] . "</td>";
         echo "<td>$" . $row['price'] . "</td>";
-      
         echo "<td>" . $row['material'] . "</td>";
         echo "<td>" . (isset($row['product_information']) ? htmlspecialchars($row['product_information']) : "") . "</td>";
         echo "<td>";
-      
-        echo "<button class='edit-button' onclick='editItem(" . $row['item_id'] . ")'>Edit</button>"; 
-        
+        echo "<button class='edit-button' onclick='editItem(" . $row['item_id'] . ")'>Edit</button>";     
         echo "<button class='delete-button' onclick='confirmDelete(" . $row['item_id'] . ")'>Delete</button>";
         echo "</td>";
         echo "</tr>";

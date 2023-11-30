@@ -1,4 +1,3 @@
-<?php session_start()?>;
 
 
 <!DOCTYPE html>
@@ -11,7 +10,7 @@
     <title>Document</title>
 
     <style>
-               .w3-sidebar:hover + .main--content {
+        .w3-sidebar:hover + .main--content {
             margin-left: 200px;
         }
 
@@ -34,8 +33,7 @@
             background-color: #111;
             position: fixed;
             overflow-x: hidden;
-            
-            transition: width 0.3s;
+             transition: width 0.3s;
             z-index: 1;
         }
 
@@ -77,9 +75,7 @@
 
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 </body>
 </html>

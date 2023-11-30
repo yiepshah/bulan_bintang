@@ -1,6 +1,5 @@
 <?php
 
-use PSpell\Dictionary;
 
 session_start();
 
@@ -15,6 +14,7 @@ if ($mysqli->connect_error) {
 }
 
 $itemDetails = null;
+
 
 
 $id = isset($_GET['item_id']) ? $_GET['item_id'] : 0;
@@ -56,27 +56,28 @@ if ($result->num_rows > 0) {
     $breadcrumb .= '<span>' . $itemDetails['item_name'] . '</span>';
 
    
-    include('header.php');
+    
     
     ?>
+    <?php include ('header.php') ?>
+    
         <div class="details-container">
             <div class="row">
                 <div class="col-md-6">      
                     <img src="./images/<?php echo $itemDetails['image_path']; ?>" alt="<?php echo $itemDetails['item_name']; ?>" class="img-fluid small-image">       
                 </div>
-
-                
+               
                 <div class="col-md-6">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent pl-0">
-                        <li class="breadcrumb-item"><a href="index.php">HOME</a></li>
-                        <li class="breadcrumb-item"><a href="category.php">BAJU MELAYU</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">BM TAILORED FIT</li>
-                    </ol>
-                </nav>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb bg-transparent pl-0">
+                            <li class="breadcrumb-item"><a href="index.php">HOME</a></li>
+                            <li class="breadcrumb-item"><a href="category.php">BAJU MELAYU</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">BM TAILORED FIT</li>
+                        </ol>
+                    </nav>
                
                     <h4 class="h4" style="font-family: 'Oswald', sans-serif;"><?php echo $itemDetails['item_name']; ?></h4><hr>
-                    <p class="text">RM <?php echo $itemDetails['price']; ?></p>
+                    <p class="text">$ <?php echo $itemDetails['price']; ?></p>
                     <div class="form-group">
                         
                         <div class="form-group">
@@ -108,16 +109,16 @@ if ($result->num_rows > 0) {
                             <a href="javascript:void(0);" onclick="clearPage()" class="clear-link">Clear</a>
                         </form>
 
-                </div>
+                </div><hr>
                 
-                <div class="col-md-11">
+                <div id="details-css" class="col-md-11">
                     <p class="product-info"><strong>Product Information:</strong></p>
                     <ul>
                         <?php
                         
                         $productInfoArray = explode(', ', $itemDetails['product_information']);
                         foreach ($productInfoArray as $info) {
-                            echo '<li>' . $info . '</li>';
+                            echo '<li id= product>' . $info . '</li>';
                         }
                         ?>
                     </ul>
@@ -142,7 +143,7 @@ if ($result->num_rows > 0) {
                             echo '<li>' . $info . '</li>';
                         }
                         ?>
-                    </ul>
+                    </ul><hr>
                 </div>
             </div>
         </div>
@@ -168,23 +169,25 @@ if ($result->num_rows > 0) {
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title> <?php echo $itemDetails['item_name']; ?> ;</title>
-    <style>
 
+    <style>
         .small-image {
         max-width: 100%;
-        width: 900px;
+        width: 800px;
         height: auto;
         border-radius: 8px;
+        
     }
 
     .col-md-11{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
     }
 
 
@@ -243,9 +246,9 @@ if ($result->num_rows > 0) {
     }
 
     .breadcrumb-item a {
-    color:#4C4244 ; 
-    text-decoration: none; 
-    transition: color 0.3s ease; 
+        color:#4C4244 ; 
+        text-decoration: none; 
+        transition: color 0.3s ease; 
     }
 
  
@@ -260,16 +263,21 @@ if ($result->num_rows > 0) {
     }
 
     .clear-link {
-        margin-left: 70px; 
-         
+        margin-left: 70px;         
         text-decoration: none; 
-
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
 
     .clear-link:hover {
         text-decoration: underline; 
         cursor: pointer; 
+    }
+
+
+
+    #details-css{
+
+        font-style: oblique;
     }
 
 
@@ -282,8 +290,7 @@ if ($result->num_rows > 0) {
     </style>
 </head>
 <body>
-    
- 
+
 <script>
     // Add this script to handle checkbox behavior
     document.addEventListener("DOMContentLoaded", function () {

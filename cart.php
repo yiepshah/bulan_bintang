@@ -6,13 +6,12 @@
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+    <title>hey</title>
     <style>
         body {
             font-family: 'Your Desired Font', sans-serif;
@@ -45,16 +44,19 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            gap: 20px;
+            gap: 10px;
+           
+            
         }
 
         .cart-item {
-            flex: 0 0 calc(50% - 20px); 
-            border-bottom: 1px solid #ddd;
+            flex: 0 0 calc(50% - 40px); 
+            border-bottom: 4px solid #ddd;
             padding: 20px;
             box-sizing: border-box;
             display: flex;
             gap: 20px;
+            
         }
 
         .cart-item img {
@@ -98,7 +100,7 @@
         }
 
         .quantity-tools button:hover {
-            background-color: #0056b3;
+            background-color: #54E346;
         }
 
         .cart-totals {
@@ -124,8 +126,37 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+            
+            
+            
         }
 
+        #checkout-btn{
+            transition: transform 0.3s ease-in-out;
+        }
+
+
+        #checkout-btn:hover{
+            background-color: #54E346;
+            border: none;
+            color: black;
+            transform: scale(1.2);
+        }
+
+        #cart-btn-update{
+            transition: transform 0.3s ease-in-out;
+
+        }
+
+        #cart-btn-update:hover{
+            transform: scale(1.2);
+            background: #FFC436;
+            color: black;
+            border: none;
+        }
+
+        
+/* 
         .action-buttons button {
             background-color: #007bff;
             color: #fff;
@@ -133,13 +164,15 @@
             padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            
+            transition: transform 0.3s ease-in-out;
             font-size: 14px;
         }
 
         .action-buttons button:hover {
-            background-color: #0056b3;
-        }
+
+            transform: scale(1.5);
+        } */
     </style>
 
 </head>
@@ -225,8 +258,8 @@
         </div>
 
         <div class="cart-buttons">
-            <button type="submit" name="update_cart" class="btn btn-dark">Update Cart</button>
-            <button type="submit" name="proceed_to_checkout" class="btn btn-dark">Checkout <i class="fas fa-check-double"></i></button>
+            <button id="cart-btn-update" type="submit" name="update_cart" class="btn btn-dark">Update Cart</button>
+            <button id="checkout-btn" type="submit" name="proceed_to_checkout" class="btn btn-dark">Checkout <i class="fas fa-check-double"></i></button>
         </div>
     </div>
 
