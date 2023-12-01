@@ -3,8 +3,6 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,9 +27,7 @@
         display: flex; 
         align-items: center;
         margin-top: 20px; 
-        width: 25%;
-        
-       
+        width: 25%;    
     }
 
     .brother-collection img {
@@ -126,24 +122,33 @@
         position: absolute;
         top: 80%; 
         left: 69%; 
-        font-family: sans-serif;
-        padding: 5px 10px; 
-        background: transparent; /* Set background to transparent */
-        border: 3px solid #000; 
-        border-radius: 5px 10px;
+        padding: 5px 5px; 
+        background: transparent; 
+        border: 3px solid black; 
+        border-radius: 10px 10px;
         text-decoration: none;
-        font-weight: bold;
-        font-size: 41px;
+        font-weight: 700;
+        font-size: 40px;
         color: #000; 
-        transition: transform 0.3s ease-in-out;
-    
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        transition: transform 0.3s ease-in-out;    
     }
 
     #shop:hover{
-        background-color: #000;
+        background-color: #161A30;
         color: #fff;
         transform: scale(1.1);
+        border: 4px solid #161A30; 
+        
     }
+
+    @media (max-width: 767px) {
+        /* Adjust the position and font size for smaller screens */
+        #shop {
+            top: 80%; /* Adjust the vertical position */
+            font-size: 15px;
+        }
+    }   
       
     
 
@@ -162,25 +167,17 @@
         color: #000; /* Set the color as needed */
     }
     
-
-
-
     
-
-
-
-
-   
 </style>
 </head>
 <body>
 <?php
         
 
-        // Include your header and other content
-        include('header.php');
-        // ...
+include('header.php');
+        
     ?>
+    
 <div id="carouselExample" class="carousel slide" data-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>

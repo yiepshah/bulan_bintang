@@ -72,10 +72,17 @@
         }
 
         .item p {
-            margin-top: 10px;
+            margin-top:5px;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 15px;
             color: black;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        #itemprice{
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: 600;
+            
         }
 
         .add-to-cart a {
@@ -84,8 +91,8 @@
             color: inherit;
         }
 
-        .add-to-cart button {
-            background-color: #000033;
+        /* .add-to-cart button {
+            background-color: #000;
             color: white;
             border: none;
             padding: 5px 10px;
@@ -93,7 +100,7 @@
 
         .add-to-cart button:hover {
             background-color: #0056b3;
-        }
+        } */
 
         .item:hover {
             box-shadow: 0 0 20px rgba(0, 0, 0, 1.0); /
@@ -105,7 +112,7 @@
 
         .add-to-cart button {
             background-color: transparent; /* Set the background color to transparent */
-            color: #000033;
+            color: black;
             border: none;
             padding: 1px;
             
@@ -140,7 +147,7 @@
             echo '<a id="detail" href="details.php?item_id=' . $item['item_id'] . '">';
             echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
             echo '<p>' . $item['item_name'] . '</p>';
-            echo '<p>$' . $item['price'] . '</p>';
+            echo '<p id=itemprice >$' . $item['price'] . '</p>';
             echo '<div class="add-to-cart"><a href="cart.php"><button><i class="fas fa-cart-plus"></i></button></a></div>';
             echo '</a></div>';
         }

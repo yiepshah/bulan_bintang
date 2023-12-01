@@ -77,12 +77,12 @@ if ($result->num_rows > 0) {
                     </nav>
                
                     <h4 class="h4" style="font-family: 'Oswald', sans-serif;"><?php echo $itemDetails['item_name']; ?></h4><hr>
-                    <p class="text">$ <?php echo $itemDetails['price']; ?></p>
+                    <p class="detailPrice">$ <?php echo $itemDetails['price']; ?></p>
                     <div class="form-group">
                         
                         <div class="form-group">
-                            <label for="size">Size:</label>
-                            <div class="size-box-container">
+                            <label for="size"><strong>Size:</strong></label>
+                            <div id="sizeCheck" class="size-box-container">
                                 <?php
                 
                                     $sizeOptions = array("XS", "S", "M", "L", "XL", "XXL", "3XL","4XL","5XL");
@@ -178,7 +178,7 @@ if ($result->num_rows > 0) {
     <title> <?php echo $itemDetails['item_name']; ?> ;</title>
 
     <style>
-        .small-image {
+    .small-image {
         max-width: 100%;
         width: 800px;
         height: auto;
@@ -201,29 +201,38 @@ if ($result->num_rows > 0) {
     .size-box-container {
         display: flex;
         gap: 10px; 
+        border: none;
+        
     }
 
     .size-box {
         display: flex;
         align-items: center;
+        padding: 10px;
+        width: 40px;
+        border: none;
+        
     }
 
     .size-box input {
         /* Hide the checkbox */
         display: none;
+        border: none;
+        
+        
     }
 
     .size-box label {     
         border-color: white;
         border: 1px solid; 
-        border-radius: 4px;
+        border-radius: 3px;
         cursor: pointer;
+        border: none;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .size-box input:checked + label {
-        background-color: darkgrey;
-        color: #fff;
+    .size-box label:hover{
+        transform: scale(1.4);
     }
 
     .h4{
@@ -232,17 +241,19 @@ if ($result->num_rows > 0) {
         font-weight: bolder;
     }
 
-    .add-to-cart button {
+    #button {
         background-color: #8EBAFF; 
         color: #fff; 
-        border: 1px solid #8EBAFF; 
+        border: none; 
         border-radius: 20px 20px;
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         height: 40px;
+        transition: transform 0.3s ease-in-out;
     }
 
-    .add-to-cart button:hover {
-        background-color: #003366; 
+    #button:hover {
+        background-color: black; 
+        transform: scale(1.3);
     }
 
     .breadcrumb-item a {
@@ -256,11 +267,7 @@ if ($result->num_rows > 0) {
         color: #0056b3; 
     }
 
-    #button{
-        background-color: #36395a;
-        color: #fff;
-        border-radius: 15px 15px;
-    }
+
 
     .clear-link {
         margin-left: 70px;         
@@ -279,6 +286,12 @@ if ($result->num_rows > 0) {
 
         font-style: oblique;
     }
+
+    .detailPrice {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-weight: 600;
+    }
+    
 
 
 

@@ -1,3 +1,6 @@
+<?php session_start();
+    ?>
+<?php include('header.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,18 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <?php session_start();
-    ?>
-    <script>
-        $(document).ready(function(){
-            $("#myInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myItemtable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-            });
-    </script>
+    <title>Admin Dashboard</title>
+
+
     
     <style>
         body {
@@ -279,8 +273,9 @@
 
 
 
-    <title>Admin Dashboard</title>
+
 </head>
+
 <body>
 
 <div class="w3-sidebar">
@@ -301,6 +296,7 @@
     ?>
 
 </div>
+
 
 <div class="main--content">
     <div class="header--wrapper">
@@ -323,7 +319,7 @@
             <div class="data--card sales">
                 <div class="card--header">
                     <div class="amount">
-                        <span class="title">Sales</span><span class="amount-value">$1200.00</span>
+                        <span class="title">Sales</span><span class="amount-value">$40 000.00</span>
                     </div> <i class="fas-dollar-sign icon"></i>
                     <span class="card-detail">Last 24 hours</span>
                 </div>
@@ -331,7 +327,7 @@
             <div class="data--card online-payment">
                 <div class="card--header">
                     <div class="amount">
-                        <span class="title">Online Payment</span><span class="amount-value">$800.00</span>
+                        <span class="title">Online Payment</span><span class="amount-value">$2900.00</span>
                     </div> <i class="fas-dollar-sign icon"></i>
                     <span class="card-detail">Last 24 hours</span>
                 </div>
@@ -339,7 +335,7 @@
             <div class="data--card expenses">
                 <div class="card--header">
                     <div class="amount">
-                        <span class="title">Expenses</span><span class="amount-value">$300.00</span>
+                        <span class="title">Expenses</span><span class="amount-value">$5000.00</span>
                     </div> <i class="fas-dollar-sign icon"></i>
                     <span class="card-detail">Last 24 hours</span>
                 </div>
@@ -347,7 +343,7 @@
             <div class="data--card new-customers">
                 <div class="card--header">
                     <div class="amount">
-                        <span class="title">New Customers</span><span class="amount-value">15</span>
+                        <span class="title">New Customers</span><span class="amount-value">90</span>
                     </div> <i class="fas-dollar-sign icon"></i>
                     <span class="card-detail">Last 24 hours</span>
                 </div>
@@ -370,15 +366,6 @@
                 </thead>
             <tbody id="myItemtable">
             <?php
-function connectDatabase() {
-    $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
-    return $mysqli;
-}
-
-
 
 
 $mysqli = connectDatabase();
@@ -423,3 +410,16 @@ $mysqli->close();
         window.location.href = "edit_item.php?id=" + itemId;
     }
 </script>
+
+<script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myItemtable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+            });
+    </script>
+</body>
+

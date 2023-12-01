@@ -103,7 +103,7 @@ if (isset($_GET['id'])) {
             <a class="navbar-brand" href="index.php">
                 <img class="logo" src="https://th.bing.com/th/id/OIP.IV6E-NjlfboqXML32zgvtAHaFs?w=247&h=190&c=7&r=0&o=5&pid=1.7" alt="Logo">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" title="Toggle Navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
@@ -117,12 +117,28 @@ if (isset($_GET['id'])) {
                     while ($row = $result->fetch_assoc()) {
                         $categoryId = $row['category_id'];
                         $categoryName = $row['category_name'];
-                        echo '<li class="nav-item"><a class="nav-link" href="category.php?id=' . $categoryId . '">' . $categoryName . '</a></li>';
+                        
+                        if (isset($_SESSION['role'])) {
+                            // Display category navigation items for non-admin users
+                            if ($_SESSION['role'] != 'admin') {
+                                echo '<li class="nav-item"><a class="nav-link" href="category.php?id=' . $categoryId . '">' . $categoryName . '</a></li>';
+                            }
+                        } else {
+                            // Handle the case when 'role' index is not set (user not logged in)
+                            // You might want to redirect to a login page or handle it differently
+                            echo '<li class="nav-item"><a class="nav-link" href="#">Login</a></li>';
+                        }
                     }
 
                     $mysqli->close();
+
+                    if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+                        echo '<li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="admin">';
+                        echo '<a class="nav-link" href="adminpage.php"><i class="fas fa-user-tie"></i></a>';
+                        echo '</li>';
+                    }
                     ?>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="collection.php" role="button" data-toggle="dropdown">Men</a>
                         <ul class="dropdown-menu">
@@ -282,19 +298,17 @@ if (isset($_GET['id'])) {
                         echo '<a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
                     }
                     ?>
+                </li> 
+
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="admin">
+                    <a class="nav-link" href="adminpage.php"><i class="fas fa-user-tie"></i></a>
                 </li>
                 
-                <li class="nav-item">
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="search">
                     <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
                 </li>
-                <!-- <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="Shop">
-                    <a class="nav-link" href="collection.php" id="shopping" style="">
-                        <i class="fas fa-shopping-bag"></i>
-                    </a>
-                </li> -->
-       
-                <!-- Add this code to display the cart count in your navbar -->
-                <li class="nav-item">
+
+                <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="cart">
                     <?php
                     $cartCount = isset($_SESSION["cart"]) ? count($_SESSION["cart"]) : 0;
                     ?>
@@ -311,7 +325,7 @@ if (isset($_GET['id'])) {
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip"  >
+                <li class="nav-item" data-toggle="tooltip" title="login"  >
                     <?php
                     if (isset($_SESSION['user_id'])) {
                         // User is logged in, show user profile icon
@@ -323,7 +337,15 @@ if (isset($_GET['id'])) {
                     ?>
                 </li>
 
-            </ul>
-                
+            </ul>            
     </nav>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $("").click(function(){
+            $("").slideToggle();
+        });
+    });
+</script>
      
