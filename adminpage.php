@@ -244,22 +244,30 @@
 
         .edit-button,
         .delete-button {
-            background-color: #4caf50;
-            color: #fff;
+            background-color: #dee2e6;
+            
+            color: #000;
             border: none;
             padding: 8px 12px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 10px 10px;
             margin-right: 5px;
+            transition: transform 0.3s ease-in-out;
         }
 
         .delete-button {
-            background-color: #f44336;
+            border: none;
         }
 
-        .edit-button:hover,
+        .edit-button:hover{
+            background-color: #f39c12;
+            border: none;
+            transform: scale('1.1');
+        }
         .delete-button:hover {
-            background-color: #45a049;
+            background-color: #f44336;
+            border: none;
+            transform: scale('1.1');
         }
 
         #profileimg{
