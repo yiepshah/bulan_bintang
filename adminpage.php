@@ -150,11 +150,11 @@
             justify-content: space-between;
             color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, box-shadow 0.6s ease-in-out;
         }
 
         .data--card:hover {
-            transform: scale(1.05);
+            transform: scale(1.10);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
@@ -242,10 +242,9 @@
             background-color: #f2f2f2;
         }
 
-        .edit-button,
-        .delete-button {
-            background-color: #dee2e6;
-            
+        .edit-button
+         {
+                        
             color: #000;
             border: none;
             padding: 8px 12px;
@@ -253,29 +252,35 @@
             border-radius: 10px 10px;
             margin-right: 5px;
             transition: transform 0.3s ease-in-out;
+            margin-bottom: 10px;
         }
 
         .delete-button {
             border: none;
+            color: #000;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 10px 10px;
+            margin-right: 5px;
+            transition: transform 0.3s ease-in-out;
+
+            
         }
 
         .edit-button:hover{
-            background-color: #f39c12;
+            background-color: #FFED00;
             border: none;
-            transform: scale('1.1');
+            transform: scale('1.2');
         }
         .delete-button:hover {
-            background-color: #f44336;
+            background-color: #FE0000;
             border: none;
             transform: scale('1.1');
         }
 
         #profileimg{
             margin-left: 6px;
-        }
-
-        .edit-button{
-            margin-bottom: 10px;
         }
     </style>
 
@@ -393,7 +398,7 @@ if ($result && $result->num_rows > 0) {
         echo "<td>" . (isset($row['product_information']) ? htmlspecialchars($row['product_information']) : "") . "</td>";
         echo "<td>";
         echo "<button class='edit-button' onclick='editItem(" . $row['item_id'] . ")'>Edit</button>";     
-        echo "<button class='delete-button' onclick='confirmDelete(" . $row['item_id'] . ")'>Delete</button>";
+        echo "<button class='delete-button' onclick='confirmDelete(" . $row['item_id'] . ")'>Remove</button>";
         echo "</td>";
         echo "</tr>";
     }

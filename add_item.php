@@ -46,14 +46,13 @@ if($_SERVER["REQUEST_METHOD"]== "POST") {
         $uploadOk = 0;
     }
 
-    // Check size file yang di upload
+    
 
-    // Check size file yang di upload
 if ($_FILES["image_path"]["size"] > 500000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 } else {
-    // Check file type (extension)
+   
     $allowedExtensions = array("jpg", "jpeg", "png", "gif");
     $fileExtension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -62,7 +61,7 @@ if ($_FILES["image_path"]["size"] > 500000) {
         $uploadOk = 0;
     }
 
-    // Check file type (content type)
+    
     $allowedContentTypes = array("image/jpeg", "image/png", "image/gif");
     $fileContentType = mime_content_type($_FILES["image_path"]["tmp_name"]);
 

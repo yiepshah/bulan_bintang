@@ -44,6 +44,7 @@ if ($mysqli->ping()) {
 }
 
 include('header.php');
+include('adminsidebar.php')
 ?>
 
 
@@ -62,29 +63,38 @@ include('header.php');
      <style>
         body {
             /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
+            background-color: #181823;
         }   
         .card{
             border-radius: 10px;
             color: #e6ddd8;
             background-color: black;
+            width: 1500px;
+            text-align: left;
+           
             
         }
 
         #profileImg{
             width: 300px;
+            border-radius: 30px 30px;
+        }
+
+        #userprofile{
+            font-family: 'Times New Roman', Times, serif;
         }
 
         
      </style>
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2>User Profile</h2>
+                        <h2 id="userprofile">User Profile</h2>
                     </div>
                     <img id="profileImg" src="https://th.bing.com/th/id/OIP.rLve_Yze-hD3DIOwtjDrBgHaKW?rs=1&pid=ImgDetMain" alt="dv">
                     <div class="card-body">

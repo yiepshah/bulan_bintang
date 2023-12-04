@@ -1,20 +1,27 @@
- <?php session_start()?>
+
  <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Collection</title>
+<head>
+
 
     <?php
 
+    // include('config.php');
 
-    $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
+    session_start();
+    include('config.php');
+
+    $mysqli = connectDatabase();
+
+
+    $mysqli = new mysqli("localhost", "root","", "bulan_bintang");
 
     if ($mysqli->connect_error) {
         die("Connection failed: " . $mysqli->connect_error);
@@ -31,7 +38,49 @@
     while ($row = $result->fetch_assoc()) {
         $items[] = $row;
     }
-    ?>
+
+    
+    if (isset($_GET['id'])) {
+        $categoryId = (int)$_GET['id'];
+    
+        $stmt = $mysqli->prepare("SELECT * FROM posts WHERE category_id = ?");
+        $stmt->bind_param("i", $categoryId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Clear the existing items array
+        $items = array();
+    
+        while ($row = $result->fetch_assoc()) {
+            $items[] = $row;
+        }
+    }
+ 
+
+    include('config.php'); // Include your database connection file
+    $mysqli = connectDatabase();
+
+    // Fetch categories from the database
+    $categoriesQuery = "SELECT category_id, category_name FROM categories";
+    $categoriesResult = $mysqli->query($categoriesQuery);
+
+    if (!$categoriesResult) {
+        die("Error fetching categories: " . $mysqli->error);
+    }
+
+    $categories = array();
+
+    while ($row = $categoriesResult->fetch_assoc()) {
+        $categories[] = $row;
+    }
+
+    
+    // Display category links
+    foreach ($categories as $category) {
+        echo '<a class="category-link" href="#" data-category-id="' . $category['category_id'] . '">' . $category['category_name'] . '</a>';
+    }
+
+?>
 
     <style>
         body {
@@ -115,6 +164,9 @@
             color: black;
             border: none;
             padding: 1px;
+            font-family: poppins, sans-serif;
+            font-weight: 500;
+            
             
         }
 
@@ -135,24 +187,40 @@
             }
         }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.category-link').on('click', function (e) {
+                e.preventDefault();
+                var categoryId = $(this).data('category-id');
+                window.location.href = 'collection.php?id=' + categoryId;
+            });
+        });
+    </script>
+
 </head>
 
 <body>
     <?php include('header.php'); ?>
 
     <div class="items-container">
-        <?php
-        foreach ($items as $index => $item) {
-            echo '<div class="item">';
-            echo '<a id="detail" href="details.php?item_id=' . $item['item_id'] . '">';
-            echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
-            echo '<p>' . $item['item_name'] . '</p>';
-            echo '<p id=itemprice >$' . $item['price'] . '</p>';
-            echo '<div class="add-to-cart"><a href="cart.php"><button><i class="fas fa-cart-plus"></i></button></a></div>';
-            echo '</a></div>';
-        }
-        ?>
-    </div>
+    <?php
+    foreach ($items as $index => $item) {
+        echo '<div class="item">';
+        echo '<a id="detail" href="details.php?item_id=' . $item['item_id'] . '">';
+        echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
+        echo '<p>' . $item['item_name'] . '</p>';
+        echo '<p id=itemprice >$' . $item['price'] . '</p>';
+        echo '<div class="add-to-cart">
+                <button onclick="addToCart(' . $item['item_id'] . ', \'' . $item['item_name'] . '\', ' . $item['price'] . ')">
+                    Add to Cart <i class="fas fa-cart-plus"></i>
+                </button>
+            </div>';
+        echo '</a></div>';
+    }
+    ?>
+</div>
+
 
     <?php include('footer.php'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

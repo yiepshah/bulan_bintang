@@ -4,6 +4,7 @@
 include('config.php');
 
 
+
 if (isset($_GET['id'])) {
     $categoryId = (int)$_GET['id'];
 
@@ -140,29 +141,25 @@ if (isset($_GET['id'])) {
                     ?>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="collection.php" role="button" data-toggle="dropdown">Men</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="collection.php?category=baju_melayu">BAJU MELAYU</a></li>
-                            <li><a class="dropdown-item" href="collection.php?category=slim_fit">Baju Melayu Slim Fit</a></li>
-                            <li><a class="dropdown-item" href="#">Baju Melayu Tailored Fit</a></li>
-                            <li><a class="dropdown-item" href="#">Baju Melayu Teluk Belanga</a></li>
-                            <li><a class="dropdown-item" href="#">Samping</a></li><hr> 
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Men
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <?php 
+                            foreach ($categories as $category) {
+                                echo '<a class="dropdown-item category-link" href="#" data-category-id="' . $category['category_id'] . '">' . $category['category_name'] . '</a>';
+                            }
+                        ?>
 
-                            <li><a class="dropdown-item" href="#">KURTA</a></li>
-                            <li><a class="dropdown-item" href="#">kurta A</a></li>
-                            <li><a class="dropdown-item" href="#">kurta B</a></li>
-                            <li><a class="dropdown-item" href="#">kurta C</a></li>
-                            <li><a class="dropdown-item" href="#">kurta D</a></li>
-                            <li><a class="dropdown-item" href="#">kurta E</a></li>
-                        </ul>
+                    </div>
                     </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown">Women</a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">GLAM SILVER</a></li>
-                        <li><a class="dropdown-item" href="#">Adeline</a></li>
-                        <li><a class="dropdown-item" href="#">Alyssa</a></li>
-                        <li><a class="dropdown-item" href="#">Amy</a></li>
+                        <li><a class="dropdown-item" href="collection.php?category=slim_fit">>GLAM SILVER</a></li>
+                        <li><a class="dropdown-item" href="collection.php?category=slim_fit">Adeline</a></li>
+                        <li><a class="dropdown-item" href="collection.php?category=slim_fit">Alyssa</a></li>
+                        <li><a class="dropdown-item" href="collection.php?category=slim_fit">Amy</a></li>
                         <li><a class="dropdown-item" href="#">Camelia</a></li>
                         <li><a class="dropdown-item" href="#">Dayana</a></li>
                         <li><a class="dropdown-item" href="#">Elyana</a></li>
@@ -341,10 +338,12 @@ if (isset($_GET['id'])) {
     </nav>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<script>
-    $(document).ready(function(){
-        $("").click(function(){
-            $("").slideToggle();
+    <script>
+    $(document).ready(function () {
+        $('.category-link').on('click', function (e) {
+            e.preventDefault();
+            var categoryId = $(this).data('category-id');
+            window.location.href = 'collection.php?id=' + categoryId;
         });
     });
 </script>

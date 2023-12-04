@@ -6,16 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <?php function connectDatabase() {
-    // Your database connection code here
-    $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
+    <?php if (!function_exists('connectDatabase')) {
+    function connectDatabase() {
+        $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
 
-    // Check connection
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
+        if ($mysqli->connect_error) {
+            die("Connection failed: " . $mysqli->connect_error);
+        }
+
+        return $mysqli;
     }
-
-    return $mysqli;
 }
 ?>
     

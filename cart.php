@@ -7,11 +7,43 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>hey</title>
+    <title>cart</title>
+
+    <?php
+
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $productId = $_POST['item_id'];
+    $productName = $_POST['item_name'];
+    $productPrice = $_POST['price'];
+
+
+    $productId = isset($_SESSION['cart'][$index]['item_id']) ? $_SESSION['cart'][$index]['item_id'] : '';
+$productName = isset($_SESSION['cart'][$index]['item_name']) ? $_SESSION['cart'][$index]['item_name'] : '';
+$productPrice = isset($_SESSION['cart'][$index]['item_price']) ? $_SESSION['cart'][$index]['item_price'] : '';
+    // Create a cart array in the session if it doesn't exist
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = array();
+    }
+
+    // Add the product to the cart
+    $_SESSION['cart'][] = array(
+        'item_id' => $productId,
+        'item_name' => $productName,
+        'price' => $productPrice
+    );
+    
+
+    echo 'success'; // You can send any response back to indicate success
+}
+?>
+
     <style>
         body {
             font-family: 'Your Desired Font', sans-serif;
@@ -154,24 +186,6 @@
             border: none;
         }
 
-        
-/* 
-        .action-buttons button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            
-            transition: transform 0.3s ease-in-out;
-            font-size: 14px;
-        }
-
-        .action-buttons button:hover {
-
-            transform: scale(1.5);
-        } */
     </style>
 
 </head>
@@ -180,24 +194,23 @@
 
 <body>
 
-    <div class="content">
-        <h1>Your Cart</h1>
-        <div class="cart-container">
-            
-            <div class="cart-item">
-                <img src="http://localhost/bulan_bintang/images/65531614a5112_TBL2-MIDNIGHT-BLUE.webp" alt="Product 1">
-                <div class="cart-item-details">
-                    <p>Name: Baju Melayu (Midnight Blue)</p>
-                    <p>Price: RM 194.00</p>
-                    <p>Size: M</p>
-                    <div class="quantity-tools">
-                        <label for="quantity1">Qty:</label>
-                        <button onclick="decrementQuantity('quantity1')">-</button>
-                        <input type="number" id="quantity1" name="quantity1" value="1" min="1">
-                        <button onclick="incrementQuantity('quantity1')">+</button>
-                    </div>
-                </div>
-            </div>
+<?php
+
+
+
+if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+    foreach ($_SESSION['cart'] as $index => $item) {
+        echo '<div>';
+        echo '<p>Product ID: ' . $item['item_id'] . '</p>';
+        echo '<p>Name: ' . $item['item_name'] . '</p>';
+        echo '<p>Price: $' . $item['price'] . '</p>';
+        echo '</div>';
+    }
+} else {
+    echo '<p>Your cart is empty.</p>';
+}
+?>
+
 
             
             <div class="cart-item">
@@ -282,6 +295,31 @@
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script>
+    function addToCart(productId, productName, productPrice) {
+        // Using jQuery for simplicity, ensure it's included in your project
+        $.ajax({
+            type: 'POST',
+            url: 'addToCart.php', // Replace with the correct path to your addToCart.php file
+            data: {
+                productId: productId,
+                productName: productName,
+                productPrice: productPrice
+            },
+            success: function (response) {
+                if (response === 'success') {
+                    alert('Item added to cart successfully!');
+                } else {
+                    alert('Failed to add item to cart.');
+                }
+            },
+            error: function () {
+                alert('Error in the AJAX request.');
+            }
+        });
+    }
+</script>
 </body>
 
 </html>
