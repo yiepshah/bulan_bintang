@@ -114,6 +114,13 @@ session_start();
         #Sbtn {
             border-radius: 20px 20px;
             background-color: #12122f;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #Sbtn:hover{
+            transform: scale(1.3);
+            background-color: #508D69;
+            border: none;
         }
     </style>
 </head>
@@ -140,15 +147,15 @@ session_start();
 
                     <div class="form-group">
                         <label for="name">Username</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control"  name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control"  required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <input type="password" class="form-control"  name="password" required>
                         <div  class="alert alert-primary" role="alert" style="display: none;" id="password-strength-status"></div>
                     </div>
                     <div class="form-group">

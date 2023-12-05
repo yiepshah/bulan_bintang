@@ -140,16 +140,7 @@
             color: inherit;
         }
 
-        /* .add-to-cart button {
-            background-color: #000;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-        }
 
-        .add-to-cart button:hover {
-            background-color: #0056b3;
-        } */
 
         .item:hover {
             box-shadow: 0 0 20px rgba(0, 0, 0, 1.0); /

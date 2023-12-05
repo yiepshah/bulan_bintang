@@ -1,12 +1,15 @@
 <style>
     .footer {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: poppins, sans-serif;
+        font-weight: 500;
+        /* background-color: #F5F5F5; */
+        font-size: smaller;
 
     }
 </style>
 
 <div class="footer">
-    <div class="text-center mt-2">
+    <div class="text-center mt-3">
         &copy; Copyright 2023 <strong>Bulan Bintang Clothing Sdn. Bhd. (1391049-X)</strong>
     </div>
 </div>

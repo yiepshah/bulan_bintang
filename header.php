@@ -9,31 +9,18 @@ if (isset($_GET['id'])) {
     $categoryId = (int)$_GET['id'];
 
 
-    $mysqli = connectDatabase(); 
-    echo "SELECT * FROM posts WHERE category_id = $categoryId";
-    $result = $mysqli->query("SELECT * FROM posts WHERE category_id = $categoryId");
+    $mysqli = connectDatabase();
+$result = $mysqli->query("SELECT * FROM categories");
 
-    if (!$result) {
-        echo "Error: " . $mysqli->error;
-    }
-
-    $stmt = $mysqli->prepare("SELECT * FROM posts WHERE category_id = ?");
-    $stmt->bind_param("i", $categoryId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-
-    while ($row = $result->fetch_assoc()) {
-        echo '<div>';
-        echo '<h2>' . $row['item_name'] . '</h2>';
-
-        echo '</div>';
-    }
-
-    $mysqli->close();
+// Check if there are categories
+if ($result->num_rows > 0) {
+    $categories = $result->fetch_all(MYSQLI_ASSOC);
 } else {
-  
-    ;
+    // Handle the case when there are no categories
+    $categories = array();
+}
+
+$mysqli->close();
 }
 ?>
 
@@ -120,18 +107,17 @@ if (isset($_GET['id'])) {
                         $categoryName = $row['category_name'];
                         
                         if (isset($_SESSION['role'])) {
-                            // Display category navigation items for non-admin users
+                            
                             if ($_SESSION['role'] != 'admin') {
                                 echo '<li class="nav-item"><a class="nav-link" href="category.php?id=' . $categoryId . '">' . $categoryName . '</a></li>';
                             }
                         } else {
-                            // Handle the case when 'role' index is not set (user not logged in)
-                            // You might want to redirect to a login page or handle it differently
+                            
                             echo '<li class="nav-item"><a class="nav-link" href="#">Login</a></li>';
                         }
                     }
 
-                    $mysqli->close();
+                    
 
                     if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                         echo '<li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="admin">';
@@ -144,14 +130,7 @@ if (isset($_GET['id'])) {
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Men
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <?php 
-                            foreach ($categories as $category) {
-                                echo '<a class="dropdown-item category-link" href="#" data-category-id="' . $category['category_id'] . '">' . $category['category_name'] . '</a>';
-                            }
-                        ?>
 
-                    </div>
                     </li>
                     <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  href="#" role="button" data-bs-toggle="dropdown">Women</a>

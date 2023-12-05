@@ -1,20 +1,33 @@
+
 <?php
+
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+ini_set('error_log', 'error.log');
+
 session_start();
+
+var_dump($_SESSION['user_id']);
+
+$userId = $_SESSION['user_id'];
+
+var_dump($userId);
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 } 
 
+$query = "SELECT * FROM users WHERE id = ?";
+echo $query; // Now $query is defined
 $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
 
 if ($mysqli->connect_error) {
     die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-$userId = $_SESSION['user_id'];
-
-$query = "SELECT * FROM users WHERE id = ?";
 $stmt = $mysqli->prepare($query);
 
 if ($stmt === false) {
@@ -24,71 +37,75 @@ if ($stmt === false) {
 $stmt->bind_param("i", $userId);
 
 if (!$stmt->execute()) {
+    var_dump($stmt->error);
     die('Error executing statement: ' . $stmt->error);
 }
 
 $result = $stmt->get_result();
-
-if (!$result) {
-    die('Error getting result: ' . $stmt->error);
+if ($result === false) {
+    die('Error executing query: ' . $mysqli->error);
 }
 
-$stmt->close(); 
+$row = $result->fetch_assoc();
+echo 'Reached this point';
+var_dump($row);
 
-if ($result) {
-    $result->close(); 
-}
+// Close result before closing the statement
+$result->close();
 
-if ($mysqli->ping()) {
-    $mysqli->close(); 
-}
+// Close the prepared statement
+$stmt->close();
+
+// Close the connection
+$mysqli->close();
 
 include('header.php');
-include('adminsidebar.php')
+include('adminsidebar.php');
+
+ob_flush();
+
+
+
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    
+    
+    
     <title>Profile</title>
 
 
      <style>
         body {
-            /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
-            background-color: #181823;
+            
+            background-color:#0F0E0E;
         }   
         .card{
-            border-radius: 10px;
-            color: #e6ddd8;
-            background-color: black;
-            width: 1500px;
-            text-align: left;
-           
-            
+            border-radius: 30px 20px;
+            color: #FEF7DC;
+            background-color: #2C3333;
+            width: auto;
+            text-align: left;           
         }
 
         #profileImg{
-            width: 300px;
+            width: 150px;
             border-radius: 30px 30px;
         }
 
         #userprofile{
-            font-family: 'Times New Roman', Times, serif;
+            font-family: poppins, sans-serif;
         }
 
         
      </style>
 </head>
 <body>
-    <div class="container mt-3">
+
+<div class="container mt-3">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -98,32 +115,42 @@ include('adminsidebar.php')
                     </div>
                     <img id="profileImg" src="https://th.bing.com/th/id/OIP.rLve_Yze-hD3DIOwtjDrBgHaKW?rs=1&pid=ImgDetMain" alt="dv">
                     <div class="card-body">
-                    <div class="profile-info">
-                    
-                            <div>            
-                                <p><strong>Name:</strong> <?php echo $row['name']; ?></p>
-                                <p><strong>Email:</strong> <?php echo $row['email']; ?></p>
-                                <p><strong>Status:</strong> <?php echo $row['email']; ?></p>
-                                <p><strong>Register Date:</strong> <?php echo $row['email']; ?></p>
+                        <div class="profile-info">
+                            <?php
+                            var_dump($row);
 
-                                
-                            </div>
-                        
-                        <?php while ($row = $result->fetch_assoc()): ?>
+                            if ($row !== NULL) {
+                                echo '<div>';
+                                echo '<p><strong>Name:</strong> ' . $row['name'] . '</p>';
+                                echo '<p><strong>Email:</strong> ' . $row['email'] . '</p>';
 
-                        <?php endwhile; ?>
+                                if (isset($row['role'])) {
+                                    echo '<p><strong>Status:</strong> ' . $row['role'] . '</p>';
+                                } else {
+                                    echo '<p><strong>Status:</strong> Not available</p>';
+                                }
+
+                                if (isset($row['register_date'])) {
+                                    echo '<p><strong>Register Date:</strong> ' . $row['register_date'] . '</p>';
+                                } else {
+                                    echo '<p><strong>Register Date:</strong> Not available</p>';
+                                }
+
+                                echo '</div>';
+                            } else {
+                                echo 'No user data found.';
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <?php
-    include('footer.php');
-   
-    ?>
+   </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>
+
+

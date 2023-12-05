@@ -34,7 +34,7 @@
         max-width: 100%;
         height: auto;
         width: 500px;
-        transition: transform 0.7s ease-in-out;   
+        transition: transform 0.4s ease-in-out;   
         padding: 10px;
     }
 

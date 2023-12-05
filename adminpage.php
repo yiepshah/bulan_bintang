@@ -213,7 +213,8 @@
             border-collapse: collapse;
             margin-top: 1rem;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+            border-radius: 5px 5px;
         }
 
         .stock-table th,
@@ -269,12 +270,12 @@
         }
 
         .edit-button:hover{
-            background-color: #FFED00;
+            background-color: #352F44;
             border: none;
             transform: scale('1.2');
         }
         .delete-button:hover {
-            background-color: #FE0000;
+            background-color: #BB2525;
             border: none;
             transform: scale('1.1');
         }

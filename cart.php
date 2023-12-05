@@ -1,4 +1,55 @@
-<?php session_start()?>
+<?php session_start();
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_to_cart'])) {
+    $productId = isset($_POST['item_id']) ? $_POST['item_id'] : 0;
+    $productName = isset($_POST['item_name']) ? $_POST['item_name'] : '';
+    $productPrice = isset($_POST['price']) ? $_POST['price'] : '';
+    $productImage = isset($_POST['image_path']) ? $_POST['image_path'] : '';
+    $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
+    
+    
+    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+        foreach ($_SESSION['cart'] as $index => $item) {
+            echo '<div class="cart-item">';
+            echo '<img src="' . $item['image_path'] . '" alt="Product Image">';
+            echo '<div class="cart-item-details">';
+            echo '<p>Product ID: ' . $item['item_id'] . '</p>';
+            echo '<p>Name: ' . $item['item_name'] . '</p>';
+            echo '<p>Price: $' . $item['price'] . '</p>';         
+            echo '</div>';
+            echo '</div>';
+        }
+    }
+
+    $productExists = false;
+
+
+    foreach ($_SESSION['cart'] as &$cartItem) {
+        if ($cartItem['item_id'] == $productId) {      
+            $productExists = true;    
+            break;
+        }
+    }
+
+    $_SESSION['cart'][] = array(
+        'image_path' => $productImage,
+        'item_id' => $productId,
+        'item_name' => $productName,
+        'price' => $productPrice,
+       
+    );
+    
+    
+
+    echo 'success'; 
+}
+
+echo '<pre>';
+print_r($_SESSION['cart']);
+echo '</pre>';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,40 +60,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+  
     <title>cart</title>
 
-    <?php
-
-
-
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $productId = $_POST['item_id'];
-    $productName = $_POST['item_name'];
-    $productPrice = $_POST['price'];
-
-
-    $productId = isset($_SESSION['cart'][$index]['item_id']) ? $_SESSION['cart'][$index]['item_id'] : '';
-$productName = isset($_SESSION['cart'][$index]['item_name']) ? $_SESSION['cart'][$index]['item_name'] : '';
-$productPrice = isset($_SESSION['cart'][$index]['item_price']) ? $_SESSION['cart'][$index]['item_price'] : '';
-    // Create a cart array in the session if it doesn't exist
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = array();
-    }
-
-    // Add the product to the cart
-    $_SESSION['cart'][] = array(
-        'item_id' => $productId,
-        'item_name' => $productName,
-        'price' => $productPrice
-    );
-    
-
-    echo 'success'; // You can send any response back to indicate success
-}
-?>
 
     <style>
         body {
@@ -157,10 +178,7 @@ $productPrice = isset($_SESSION['cart'][$index]['item_price']) ? $_SESSION['cart
             width: 100%;
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
-            
-            
-            
+            margin-top: 20px;          
         }
 
         #checkout-btn{
@@ -190,29 +208,11 @@ $productPrice = isset($_SESSION['cart'][$index]['item_price']) ? $_SESSION['cart
 
 </head>
 
+
 <?php include('header.php')?>
 
 <body>
-
-<?php
-
-
-
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-    foreach ($_SESSION['cart'] as $index => $item) {
-        echo '<div>';
-        echo '<p>Product ID: ' . $item['item_id'] . '</p>';
-        echo '<p>Name: ' . $item['item_name'] . '</p>';
-        echo '<p>Price: $' . $item['price'] . '</p>';
-        echo '</div>';
-    }
-} else {
-    echo '<p>Your cart is empty.</p>';
-}
-?>
-
-
-            
+          
             <div class="cart-item">
                 <img src="http://localhost/bulan_bintang/images/655337457a76b_SF31-SHERWOOD-TAN.webp" alt="Product 2">
                 <div class="cart-item-details">
@@ -225,6 +225,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                         <input type="number" id="quantity2" name="quantity2" value="1" min="1">
                         <button onclick="incrementQuantity('quantity2')">+</button>
                     </div>
+                    <button class="btn btn-dark" onclick="addToCart('1', 'Slim Fit (Sherwood Tan)', '194.00', ['XL'])">Add to Cart</button>
                 </div>
             </div>
 
@@ -296,29 +297,29 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script>
-    function addToCart(productId, productName, productPrice) {
-        // Using jQuery for simplicity, ensure it's included in your project
-        $.ajax({
-            type: 'POST',
-            url: 'addToCart.php', // Replace with the correct path to your addToCart.php file
-            data: {
-                productId: productId,
-                productName: productName,
-                productPrice: productPrice
-            },
-            success: function (response) {
-                if (response === 'success') {
-                    alert('Item added to cart successfully!');
-                } else {
-                    alert('Failed to add item to cart.');
-                }
-            },
-            error: function () {
-                alert('Error in the AJAX request.');
-            }
-        });
-    }
+
+
+<script>
+function addToCart(productId, productName, productPrice, selectedSizes) {
+    $.ajax({
+        type: 'POST',
+        url: 'cart.php', 
+        data: {
+            add_to_cart: 1,
+            item_id: productId,
+            item_name: productName,
+            price: productPrice,
+            size: selectedSizes
+        },
+        success: function (response) {
+            console.log(response); 
+           
+        },
+        error: function () {
+            alert('Error in the AJAX request.');
+        }
+    });
+}
 </script>
 </body>
 

@@ -49,15 +49,9 @@ if ($id) {
 
 if ($result->num_rows > 0) {
     $itemDetails = $result->fetch_assoc();
-
-
     $breadcrumb = '<a href="home.php">Home</a> / ';
     $breadcrumb .= '<a href="category.php">Baju Melayu Slim Fit</a> / ';
     $breadcrumb .= '<span>' . $itemDetails['item_name'] . '</span>';
-
-   
-    
-    
     ?>
     <?php include ('header.php') ?>
     
@@ -82,29 +76,26 @@ if ($result->num_rows > 0) {
                         
                         <div class="form-group">
                             <label for="size"><strong>Size:</strong></label>
-                            <div id="sizeCheck" class="size-box-container">
-                                <?php
-                
-                                    $sizeOptions = array("XS", "S", "M", "L", "XL", "XXL", "3XL","4XL","5XL");
-                                 
-
-                                foreach ($sizeOptions as $size) {
-                                    ?>
-                                    <div class="size-box">
-                                        <input type="checkbox" id="size_<?php echo $size; ?>" name="size[]" value="<?php echo $size; ?>" class="form-check-input size-checkbox">
-                                        <label for="size_<?php echo $size; ?>" class="form-check-label"><?php echo $size; ?></label>
-                                    </div>
+                                <div id="sizeCheck" class="size-box-container">
                                     <?php
-                                }
-                                ?>
-                            </div>
+                                    $sizeOptions = array("XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL");
+                                    foreach ($sizeOptions as $size) {
+                                        echo '
+                                            <div class="size-box">
+                                                <input type="checkbox" id="size_' . $size . '" name="size[]" value="' . $size . '" class="form-check-input size-checkbox">
+                                                <label for="size_' . $size . '" class="form-check-label">' . $size . '</label>
+                                            </div>';
+                                    }
+                                    ?>
+                                </div>
                         </div>
 
                         <form method="post" action="cart.php">
                             <input type="hidden" name="add_to_cart">
-                            <input type="hidden" name="product_id" value="your_product_id">
-                            <input type="hidden" name="item_name" value="your_item_name">
-                            <input type="hidden" name="price" value="your_price">
+                            <input type="hidden" name="item_id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="item_name" value="<?php echo $itemDetails['item_name']; ?>">
+                            <input type="hidden" name="image_path" value="<?php echo $itemDetails['image_path']; ?>">
+                            <input type="hidden" name="price" value="<?php echo $itemDetails['price']; ?>">
                             <button id="button" class="btn btn-btn" type="submit">Add to Cart</button>
                             <a href="javascript:void(0);" onclick="clearPage()" class="clear-link">Clear</a>
                         </form>
