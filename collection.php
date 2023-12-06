@@ -48,7 +48,6 @@
         $stmt->execute();
         $result = $stmt->get_result();
     
-        // Clear the existing items array
         $items = array();
     
         while ($row = $result->fetch_assoc()) {
@@ -57,10 +56,9 @@
     }
  
 
-    include('config.php'); // Include your database connection file
+    include('config.php'); 
     $mysqli = connectDatabase();
 
-    // Fetch categories from the database
     $categoriesQuery = "SELECT category_id, category_name FROM categories";
     $categoriesResult = $mysqli->query($categoriesQuery);
 
@@ -75,7 +73,6 @@
     }
 
     
-    // Display category links
     foreach ($categories as $category) {
         echo '<a class="category-link" href="#" data-category-id="' . $category['category_id'] . '">' . $category['category_name'] . '</a>';
     }
@@ -101,6 +98,10 @@
             margin-top: 20px;
         }
 
+        .item figure {
+            position: relative;
+        }
+
         .item {
             width: calc(32% - 20px); 
             margin: 10px;
@@ -114,12 +115,39 @@
             
         }
 
-        .item img {
+        .item figure img {
             max-width: 100%;
             height: auto;
             border-radius: 5px 5px;
+            -webkit-filter: grayscale(0) blur(0);
+            filter: grayscale(0) blur(0);
+            -webkit-transition: .3s ease-in-out;
+            transition: .3s ease-in-out;
+        } 
+
+        .item:hover img {
+            -webkit-filter: grayscale(1) blur(5px);
+            filter: grayscale(1) blur(3px); 
         }
 
+        .item:hover figure::before {
+            opacity: 1;
+        }
+
+        .item figure::before {
+            content: 'Click here';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+      
         .item p {
             margin-top:5px;
             font-weight: bold;
@@ -151,7 +179,7 @@
         }
 
         .add-to-cart button {
-            background-color: transparent; /* Set the background color to transparent */
+            background-color: transparent; 
             color: black;
             border: none;
             padding: 1px;
@@ -177,6 +205,8 @@
                 width: calc(100% - 20px); 
             }
         }
+
+        
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
@@ -188,18 +218,18 @@
             });
         });
     </script>
-
 </head>
 
 <body>
     <?php include('header.php'); ?>
-
     <div class="items-container">
     <?php
     foreach ($items as $index => $item) {
         echo '<div class="item">';
         echo '<a id="detail" href="details.php?item_id=' . $item['item_id'] . '">';
-        echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
+        echo '<figure>';
+            echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
+            echo '</figure>';
         echo '<p>' . $item['item_name'] . '</p>';
         echo '<p id=itemprice >$' . $item['price'] . '</p>';
         echo '<div class="add-to-cart">
@@ -212,7 +242,23 @@
     ?>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+        
+            $('#search-icon').on('click', function () {
+                $('#search-input').toggle();
+            });
 
+           
+            $("#search-input").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".item").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
     <?php include('footer.php'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

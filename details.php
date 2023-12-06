@@ -96,6 +96,7 @@ if ($result->num_rows > 0) {
                             <input type="hidden" name="item_name" value="<?php echo $itemDetails['item_name']; ?>">
                             <input type="hidden" name="image_path" value="<?php echo $itemDetails['image_path']; ?>">
                             <input type="hidden" name="price" value="<?php echo $itemDetails['price']; ?>">
+                            <input type="hidden" name="size[]" value="<?php echo isset($_POST['size']) ? implode(',', $_POST['size']) : ''; ?>">
                             <button id="button" class="btn btn-btn" type="submit">Add to Cart</button>
                             <a href="javascript:void(0);" onclick="clearPage()" class="clear-link">Clear</a>
                         </form>
@@ -169,6 +170,9 @@ if ($result->num_rows > 0) {
     <title> <?php echo $itemDetails['item_name']; ?> ;</title>
 
     <style>
+    @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+
     .small-image {
         max-width: 100%;
         width: 800px;
@@ -206,7 +210,7 @@ if ($result->num_rows > 0) {
     }
 
     .size-box input {
-        /* Hide the checkbox */
+       
         display: none;
         border: none;
         
@@ -240,11 +244,13 @@ if ($result->num_rows > 0) {
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         height: 40px;
         transition: transform 0.3s ease-in-out;
+        
     }
 
     #button:hover {
         background-color: black; 
         transform: scale(1.3);
+        animation-timing-function: ease-in;
     }
 
     .breadcrumb-item a {
@@ -283,31 +289,23 @@ if ($result->num_rows > 0) {
         font-weight: 600;
     }
     
-
-
-
-
-
-
-
-  
     </style>
 </head>
 <body>
 
 <script>
-    // Add this script to handle checkbox behavior
+    
     document.addEventListener("DOMContentLoaded", function () {
         var sizeCheckboxes = document.querySelectorAll('.size-checkbox');
 
         sizeCheckboxes.forEach(function (checkbox) {
             checkbox.addEventListener('change', function () {
                 if (this.checked) {
-                    // If checkbox is checked, change the color
+                    
                     this.nextElementSibling.style.backgroundColor = '#007bff';
                     this.nextElementSibling.style.color = '#fff';
                 } else {
-                    // If checkbox is unchecked, change the color back to transparent
+                    
                     this.nextElementSibling.style.backgroundColor = 'transparent';
                     this.nextElementSibling.style.color = '#007bff';
                 }
@@ -318,7 +316,7 @@ if ($result->num_rows > 0) {
 
 <script>
 function clearPage() {
-    // Reload the current page
+    
     location.reload();
 }
 </script>

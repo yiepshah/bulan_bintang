@@ -1,8 +1,19 @@
 <?php
 session_start();
-// not settled yet 
 
-if($_SERVER["REQUEST_METHOD"]== "POST") {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if (function_exists('imagewebp')) {
+    echo 'WebP support is enabled.';
+} else {
+    echo 'WebP support is not enabled.';
+    // Optionally, you can handle this case or display a message to the user.
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"]))  {
     $host = "localhost";
     $username = "root";         //check jika form ni dah submit
     $password = "";
@@ -16,15 +27,14 @@ if($_SERVER["REQUEST_METHOD"]== "POST") {
         die("Connection failed:" . mysqli_connect_error()); // check connection
     }
 
-
-    //buat process form data
+    
     $item_name = $_POST["item_name"];  
     $price = $_POST["price"] ;
     $product_information = $_POST["product_information"];
     $material = $_POST["material"];
     $inside_box = $_POST["inside_box"];
 
-    //file upload handling
+    
     $target_dir = "images";
     $target_file = $target_dir . basename($_FILES["image_path"]["name"]);
 
@@ -32,7 +42,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST") {
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
 
-    //check sama ada gambar yg di upload adalah actual image atau fake image
+    
 
     $check = getimagesize($_FILES["image_path"]["tmp_name"]);
     if ($check === false) {
@@ -53,20 +63,20 @@ if ($_FILES["image_path"]["size"] > 500000) {
     $uploadOk = 0;
 } else {
    
-    $allowedExtensions = array("jpg", "jpeg", "png", "gif");
+    $allowedExtensions = array("jpg", "jpeg", "png", "gif", "webp");
     $fileExtension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
+    
     if (!in_array($fileExtension, $allowedExtensions)) {
-        echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed. Your file has extension: $fileExtension";
+        echo "Sorry, only JPG, JPEG, PNG, GIF, and WEBP files are allowed. Your file has extension: $fileExtension";
         $uploadOk = 0;
     }
 
     
-    $allowedContentTypes = array("image/jpeg", "image/png", "image/gif");
+    $allowedContentTypes = array("image/jpeg", "image/png", "image/gif", "image/webp");
     $fileContentType = mime_content_type($_FILES["image_path"]["tmp_name"]);
 
     if (!in_array($fileContentType, $allowedContentTypes)) {
-        echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed. Your file has content type: $fileContentType";
+        echo "Sorry, only JPG, JPEG, PNG, GIF, and WebP files are allowed. Your file has content type: $fileContentType";
         $uploadOk = 0;
     }
 }
@@ -126,12 +136,10 @@ if ($_FILES["image_path"]["size"] > 500000) {
             height: 100%;
             background-image: url('https://i.pinimg.com/564x/6e/94/f4/6e94f414f98de6b1323056902ff91ffb.jpg');            
             background-position: center;
-            background-size:auto         
-            
+            background-size:auto                    
         }
 
         .container {
-
             border: 2px solid rgba(255, 255, 255, 2);
             box-shadow: 0 0 20px rgba(0, 0, 0, .2);
             background: transparent;
@@ -161,7 +169,6 @@ if ($_FILES["image_path"]["size"] > 500000) {
             border-radius: 10px;
             width: 100%;
             margin-bottom: 15px;
-
         }
 
         #addbtn {
@@ -169,8 +176,7 @@ if ($_FILES["image_path"]["size"] > 500000) {
             border: none;
             margin-top: 10px;     
             background-color: #363062;     
-            width: 100px; 
-            
+            width: 100px;           
         }
 
         #addbtn:hover {
@@ -229,9 +235,7 @@ if ($_FILES["image_path"]["size"] > 500000) {
                     </div><br><br>
                 
                     <button id="addbtn" class="btn" name="submit" type="submit">Add</button>
-
                 </form>
-
             </div>
         </div>
     </div>

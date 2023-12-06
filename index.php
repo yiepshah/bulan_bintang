@@ -128,7 +128,7 @@
         border-radius: 10px 10px;
         text-decoration: none;
         font-weight: 700;
-        font-size: 40px;
+        font-size: 20px;
         color: #000; 
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         transition: transform 0.3s ease-in-out;    
@@ -190,7 +190,7 @@ include('header.php');
       <img class="custom-image" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Raya-2023-Baju-Raya-Family.jpg" class="" alt="">
     </div>
     <div class="carousel-item">
-      <img class="custom-image" src="https://cdn.store-assets.com/s/1183357/f/10198896.jpg">
+      <img class="custom-image" src="https://bulanbintanghq.my/wp-content/uploads/2023/02/Raya-2023-Baju-Raya-Perempuan-1024x576.jpg">
     </div>
     <div class="carousel-item">
       <img class="custom-image" src="https://cdn.store-assets.com/s/859197/f/9740202.jpg?width=1500" class="" alt="">

@@ -1,5 +1,5 @@
 <?php
-
+// session_start();
 
 include('config.php');
 
@@ -83,6 +83,10 @@ $mysqli->close();
             .navbar .navbar-nav .nav-item i {
                 margin-right: 5px;
             }
+        }
+
+        .search--box{
+            margin-top: 18px;
         }
     </style>
     
@@ -281,8 +285,14 @@ $mysqli->close();
                 </li>
                 
                 <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="search">
-                    <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
+                <div class="search--box">
+                    <i id="search-icon" class="fa fa-solid fa-search"></i>
+                    <input id="search-input" type="text" placeholder="Search" style="display: none;">
+                </div>
                 </li>
+                
+
+                
 
                 <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="cart">
                     <?php

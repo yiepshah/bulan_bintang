@@ -322,8 +322,7 @@
             <div class="search--box">
                 <i class="fa-solid fa-search"></i>
                 <input id="myInput" type="text" placeholder="Search">
-            </div>
-           
+            </div>          
         </div>
     </div>
 
