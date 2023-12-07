@@ -1,48 +1,37 @@
-<?php
+    <?php
 session_start();
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if (function_exists('imagewebp')) {
-    echo 'WebP support is enabled.';
-} else {
-    echo 'WebP support is not enabled.';
-    // Optionally, you can handle this case or display a message to the user.
-    exit;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"]))  {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $host = "localhost";
-    $username = "root";         //check jika form ni dah submit
+    $username = "root";
     $password = "";
     $database = "bulan_bintang";
+    $port = 3306;
 
-
-    $conn = mysqli_connect($host, $username, $password, $database); // buat connection dgn database
-
+    $conn = mysqli_connect($host, $username, $password, $database);
 
     if (!$conn) {
-        die("Connection failed:" . mysqli_connect_error()); // check connection
+        die("Connection failed: " . mysqli_connect_error());
     }
 
-    
-    $item_name = $_POST["item_name"];  
-    $price = $_POST["price"] ;
+    $item_name = $_POST["item_name"];
+    $price = $_POST["price"];
     $product_information = $_POST["product_information"];
     $material = $_POST["material"];
     $inside_box = $_POST["inside_box"];
 
-    
-    $target_dir = "images";
-    $target_file = $target_dir . basename($_FILES["image_path"]["name"]);
-
+    // File upload handling
+    $target_dir = "C:/xampp/htdocs/bulan_bintang/images/";
+    $imageFileName = $_FILES["image_path"]["name"];
+    $filename = time() . '_' . $imageFileName;
+    $target_file = $target_dir . $filename;
     $uploadOk = 1;
+
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-
-    
 
     $check = getimagesize($_FILES["image_path"]["tmp_name"]);
     if ($check === false) {
@@ -50,39 +39,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"]))  {
         $uploadOk = 0;
     }
 
-   
     if (file_exists($target_file)) {
         echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
 
-    
+    if ($_FILES["image_path"]["size"] > 1000000) {
+        echo "Sorry, your file is too large.";
+        $uploadOk = 0;
+    }
 
-if ($_FILES["image_path"]["size"] > 500000) {
-    echo "Sorry, your file is too large.";
-    $uploadOk = 0;
-} else {
-   
     $allowedExtensions = array("jpg", "jpeg", "png", "gif", "webp");
-    $fileExtension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
-    if (!in_array($fileExtension, $allowedExtensions)) {
-        echo "Sorry, only JPG, JPEG, PNG, GIF, and WEBP files are allowed. Your file has extension: $fileExtension";
-        $uploadOk = 0;
-    }
-
-    
-    $allowedContentTypes = array("image/jpeg", "image/png", "image/gif", "image/webp");
-    $fileContentType = mime_content_type($_FILES["image_path"]["tmp_name"]);
-
-    if (!in_array($fileContentType, $allowedContentTypes)) {
-        echo "Sorry, only JPG, JPEG, PNG, GIF, and WebP files are allowed. Your file has content type: $fileContentType";
-        $uploadOk = 0;
-    }
-}
-  
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed.";
+    if (!in_array($imageFileType, $allowedExtensions)) {
+        echo "Sorry, only JPG, JPEG, PNG, GIF, and WEBP files are allowed. Your file has extension: $imageFileType";
         $uploadOk = 0;
     }
 
@@ -92,16 +61,25 @@ if ($_FILES["image_path"]["size"] > 500000) {
         if (move_uploaded_file($_FILES["image_path"]["tmp_name"], $target_file)) {
             echo "The file " . basename($_FILES["image_path"]["name"]) . " has been uploaded.";
 
+            // Insert data into database
             $sql = "INSERT INTO posts (image_path, item_name, price, product_information, material, inside_box) 
-                    VALUES (?, ?, ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?)";
 
             $stmt = mysqli_prepare($conn, $sql);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "ssssss", $target_file, $item_name, $price, $product_information, $material, $inside_box);
+                mysqli_stmt_bind_param($stmt, "ssssss", $filename, $item_name, $price, $product_information, $material, $inside_box);
 
                 if (mysqli_stmt_execute($stmt)) {
                     echo "Item added successfully.";
+
+                    // Display the uploaded image
+                    $imagePath = './images/' . $filename;
+                    if (file_exists($imagePath)) {
+                        echo '<img src="' . $imagePath . '" alt="' . $item_name . '">';
+                    } else {
+                        echo 'Image not found!';
+                    }
                 } else {
                     echo "Error executing statement: " . mysqli_stmt_error($stmt);
                 }
@@ -117,25 +95,18 @@ if ($_FILES["image_path"]["size"] > 500000) {
 
     mysqli_close($conn);
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
+?>
+    <?php
+    include('header.php');
+    include ('adminsidebar.php');
+    ?>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title>Add Item</title>
     <style>
         body {
             justify-content: center;
             height: 100%;
-            background-image: url('https://i.pinimg.com/564x/6e/94/f4/6e94f414f98de6b1323056902ff91ffb.jpg');            
-            background-position: center;
+            background-image: url('https://i.pinimg.com/564x/6e/94/f4/6e94f414f98de6b1323056902ff91ffb.jpg');              
             background-size:auto                    
         }
 
@@ -144,17 +115,19 @@ if ($_FILES["image_path"]["size"] > 500000) {
             box-shadow: 0 0 20px rgba(0, 0, 0, .2);
             background: transparent;
             color:#ffff; 
-            backdrop-filter: blur(10px);     
+            /* backdrop-filter: blur(10px);      */
             border-radius: 10px 10px;
             border: none;
+            margin-top: 30px;
         }
 
 
 
         h1 {
             text-align: center;
-            font-size: 28px;
+            font-size: 29px;
             margin-bottom: 20px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
         label {
@@ -173,14 +146,18 @@ if ($_FILES["image_path"]["size"] > 500000) {
 
         #addbtn {
             color: #ffff;
-            border: none;
-            margin-top: 10px;     
+            border: none;     
             background-color: #363062;     
-            width: 100px;           
+            width: 100px;    
+            transition: transform 0.3s ease-in-out; 
+            border-radius: 20px 20px;   
+               
         }
 
         #addbtn:hover {
             background-color: black;
+            transform: scale(1.2);
+            
         }
 
         #bblogo {
@@ -190,13 +167,16 @@ if ($_FILES["image_path"]["size"] > 500000) {
             align-items: center ;
             margin-right: 10px;
         }
-        
+
     </style>
+
+
 </head>
-<?php include('header.php') ?>
-<?php include('adminsidebar.php')?>
+
 <body>    
-    
+
+
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
@@ -232,9 +212,8 @@ if ($_FILES["image_path"]["size"] > 500000) {
                     <div class="form-group">
                         <label for="inside_box">What's Inside the Box:</label>
                         <input type="text" class="form-control" name="inside_box" id="inside_box" required>
-                    </div><br><br>
-                
-                    <button id="addbtn" class="btn" name="submit" type="submit">Add</button>
+                        <button id="addbtn" class="btn" name="submit" type="submit">Add</button>
+                    </div><br><br>                  
                 </form>
             </div>
         </div>

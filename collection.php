@@ -23,7 +23,7 @@
 
     $mysqli = new mysqli("localhost", "root","", "bulan_bintang");
 
-    if ($mysqli->connect_error) {
+    if ($mysqli->connect_error) { 
         die("Connection failed: " . $mysqli->connect_error);
     }
 

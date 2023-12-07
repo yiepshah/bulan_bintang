@@ -4,7 +4,7 @@ session_start();
 
 function updateQuantity($productId, $newQuantity)
 {
-    foreach ($_SESSION['cart'] as &$cartItem) {
+    foreach ($_SESSION['cart'] as & $cartItem) {
         if ($cartItem['item_id'] == $productId) {
             $cartItem['quantity'] = $newQuantity;
             return true;
