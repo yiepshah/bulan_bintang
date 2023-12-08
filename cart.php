@@ -3,14 +3,16 @@
 session_start();
 
 function updateQuantity($productId, $newQuantity)
-{
-    foreach ($_SESSION['cart'] as & $cartItem) {
-        if ($cartItem['item_id'] == $productId) {
-            $cartItem['quantity'] = $newQuantity;
-            return true;
+{   
+    if(isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+        // var_dump($_SESSION['cart']);
+        foreach ($_SESSION['cart'] as & $cartItem) {
+            if ($cartItem['item_id'] == $productId) {
+                $cartItem['quantity'] = $newQuantity;
+                return true;
+            }
         }
-    }
-    return false;
+    }    return false;
 }
 
 function removeFromCart($productId)
@@ -68,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -83,12 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
 
         body {
-            font-family: 'Your Desired Font', sans-serif;
+            
             background-color: #f8f9fa;
             margin: 10px; 
         }
 
-        header {
+        /* header {
             background-color: #1F2937;
             color: #fff;
             padding: 10px;
@@ -97,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
             top: 0;
             z-index: 1000;
-        }
+        } */
 
         .content {
             padding: 20px;           
@@ -105,13 +107,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .content {
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             border-radius: 8px;
             padding: 20px;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            gap: 10px;      
+            gap: 10px;     
+            font-family: "Trirong", serif; 
+            margin-top: 10px;
+            
         }
 
         .cart-container{
@@ -129,8 +134,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .cart-item img {
-            max-width: 290px; 
-            height: auto;
+            max-width: 260px; 
+            height: 230px;
             border-radius: 8px;
             
         }
@@ -143,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         .quantity-tools {
             display: flex;
-            align-items: center;
+            
             
         }
 
@@ -202,6 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         #checkout-btn{
             transition: transform 0.3s ease-in-out;
+            background-color: #202d45;
             
         }
 
@@ -233,6 +239,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #removeCartbtn:hover{
             transform: scale(1.3);
         }
+
+        @media (max-width: 768px) {
+       
+        .cart-item {
+            flex: 0 0 100%; 
+        }
+
+        .quantity-tools {
+            flex-direction: column; 
+            align-items: flex-start; 
+        }
+
+        
+    }
 
     </style>
 

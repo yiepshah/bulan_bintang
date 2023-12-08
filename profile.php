@@ -2,18 +2,18 @@
 <?php
 
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
-ini_set('error_log', 'error.log');
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('log_errors', 1);
+// ini_set('error_log', 'error.log');
 
 session_start();
 
-var_dump($_SESSION['user_id']);
+// var_dump($_SESSION['user_id']);
 
 $userId = $_SESSION['user_id'];
 
-var_dump($userId);
+// var_dump($userId);
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -21,7 +21,7 @@ if (!isset($_SESSION['user_id'])) {
 } 
 
 $query = "SELECT * FROM users WHERE id = ?";
-echo $query; // Now $query is defined
+// echo $query; // Now $query is defined
 $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
 
 if ($mysqli->connect_error) {
@@ -37,7 +37,7 @@ if ($stmt === false) {
 $stmt->bind_param("i", $userId);
 
 if (!$stmt->execute()) {
-    var_dump($stmt->error);
+    // var_dump($stmt->error);
     die('Error executing statement: ' . $stmt->error);
 }
 
@@ -47,24 +47,22 @@ if ($result === false) {
 }
 
 $row = $result->fetch_assoc();
-echo 'Reached this point';
-var_dump($row);
+// echo 'Reached this point';
+// var_dump($row);
 
-// Close result before closing the statement
+
 $result->close();
 
-// Close the prepared statement
+
 $stmt->close();
 
-// Close the connection
+
 $mysqli->close();
 
 include('header.php');
 include('adminsidebar.php');
 
-ob_flush();
-
-
+// ob_flush();
 
 ?>
 <!DOCTYPE html>
@@ -72,9 +70,7 @@ ob_flush();
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    
-    
-    
+     
     <title>Profile</title>
 
 
@@ -117,7 +113,7 @@ ob_flush();
                     <div class="card-body">
                         <div class="profile-info">
                             <?php
-                            var_dump($row);
+                            // var_dump($row);
 
                             if ($row !== NULL) {
                                 echo '<div>';

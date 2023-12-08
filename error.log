@@ -206,3 +206,10 @@
 [05-Dec-2023 09:09:49 Europe/Berlin] PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\bulan_bintang\header.php on line 135
 [05-Dec-2023 09:10:00 Europe/Berlin] PHP Notice:  Undefined variable: categories in C:\xampp\htdocs\bulan_bintang\header.php on line 135
 [05-Dec-2023 09:10:00 Europe/Berlin] PHP Warning:  Invalid argument supplied for foreach() in C:\xampp\htdocs\bulan_bintang\header.php on line 135
+[08-Dec-2023 08:05:20 Europe/Berlin] PHP Warning:  mysqli::query(): Couldn't fetch mysqli in C:\xampp\htdocs\bulan_bintang\header.php on line 11
+[08-Dec-2023 08:05:20 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function fetch_assoc() on bool in C:\xampp\htdocs\bulan_bintang\header.php:15
+Stack trace:
+#0 C:\xampp\htdocs\bulan_bintang\header.php(28): getCategories(NULL)
+#1 C:\xampp\htdocs\bulan_bintang\profile.php(62): include('C:\\xampp\\htdocs...')
+#2 {main}
+  thrown in C:\xampp\htdocs\bulan_bintang\header.php on line 15
