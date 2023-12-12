@@ -1,6 +1,7 @@
-<?php session_start();
-    ?>
-<?php include('header.php'); ?>
+
+
+<?php include('header.php');
+include('adminsidebar.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -298,6 +299,13 @@
     <a href="collection.php" class="w3-bar-item w3-button" title="Store"><i class="fas fa-store"></i></a>
    
     <?php
+
+    // Check if the user is not logged in or is not an admin, redirect to login page
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header('Location: login.php');
+    exit();
+}
+
 
  
     if (isset($_SESSION['user_id'])) {

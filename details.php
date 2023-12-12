@@ -58,8 +58,8 @@ if ($result->num_rows > 0) {
         <div class="details-container">
             <div class="row">
                 <div class="col-md-6">      
-                    <img src="./images/<?php echo $itemDetails['image_path']; ?>" alt="<?php echo $itemDetails['item_name']; ?>" class="img-fluid small-image">       
-                </div>
+                <img src="./images/<?php echo $itemDetails['image_path']; ?>" alt="<?php echo $itemDetails['item_name']; ?>" class="img-fluid small-image">
+                       </div>
                
                 <div class="col-md-6">
                     <nav aria-label="breadcrumb">
@@ -76,18 +76,18 @@ if ($result->num_rows > 0) {
                         
                         <div class="form-group">
                             <label for="size"><strong>Size:</strong></label>
-                                <div id="sizeCheck" class="size-box-container">
-                                    <?php
-                                    $sizeOptions = array("XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL");
-                                    foreach ($sizeOptions as $size) {
-                                        echo '
-                                            <div class="size-box">
-                                                <input type="checkbox" id="size_' . $size . '" name="size[]" value="' . $size . '" class="form-check-input size-checkbox">
-                                                <label for="size_' . $size . '" class="form-check-label">' . $size . '</label>
-                                            </div>';
-                                    }
-                                    ?>
-                                </div>
+                            <div id="sizeCheck" class="size-box-container">
+                                <?php
+                                $sizeOptions = array("XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL");
+                                foreach ($sizeOptions as $size) {
+                                    echo '
+                                        <div class="size-box">
+                                            <input type="checkbox" id="size_' . $size . '" name="size[]" value="' . $size . '" class="form-check-input size-checkbox">
+                                            <label for="size_' . $size . '" class="form-check-label">' . $size . '</label>
+                                        </div>';
+                                }
+                                ?>
+                            </div>
                         </div>
 
                         <form method="post" action="cart.php">
@@ -170,7 +170,7 @@ if ($result->num_rows > 0) {
     <title> <?php echo $itemDetails['item_name']; ?> ;</title>
 
     <style>
-    @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 
     .small-image {
@@ -182,14 +182,14 @@ if ($result->num_rows > 0) {
     }
 
     .col-md-11{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
+        font-family: 'Roboto', sans-serif;    
     }
 
 
 
     .text {
         font-size: 24px;
-        font-family: 'Oswald', sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-weight: bolder;
     }
 
@@ -232,7 +232,7 @@ if ($result->num_rows > 0) {
 
     .h4{
         color: #003366;
-        font-family: 'Times New Roman', Times, serif;
+        font-family: 'Roboto', sans-serif;
         font-weight: bolder;
     }
 
@@ -241,7 +241,7 @@ if ($result->num_rows > 0) {
         color: #fff; 
         border: none; 
         border-radius: 20px 20px;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
         height: 40px;
         transition: transform 0.3s ease-in-out;
         
@@ -269,7 +269,8 @@ if ($result->num_rows > 0) {
     .clear-link {
         margin-left: 70px;         
         text-decoration: none; 
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
+        color: grey;
     }
 
     .clear-link:hover {
@@ -279,13 +280,13 @@ if ($result->num_rows > 0) {
 
 
 
-    #details-css{
+    /* #details-css{
 
-        font-style: oblique;
-    }
+        
+    } */
 
     .detailPrice {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-weight: 600;
     }
     
@@ -321,8 +322,60 @@ function clearPage() {
 }
 </script>
 
+<script>
+    function addToCartFromSize(productId, productName, productPrice, selectedSize) {
+        $.ajax({
+            type: 'POST',
+            url: 'cart.php',
+            data: {
+                add_to_cart: 1,
+                item_id: productId,
+                item_name: productName,
+                price: productPrice,
+                size: [selectedSize],
+                
+            },
+            success: function (response) {
+                console.log(response);
+                // You can update the cart summary or display a success message here
+            },
+            error: function () {
+                alert('Error in the AJAX request.');
+            }
+        });
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var sizeCheckboxes = document.querySelectorAll('.size-checkbox');
+
+    sizeCheckboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function (event) {
+            if (this.checked) {
+                this.nextElementSibling.style.backgroundColor = '#007bff';
+                this.nextElementSibling.style.color = '#fff';
+            } else {
+                this.nextElementSibling.style.backgroundColor = 'transparent';
+                this.nextElementSibling.style.color = '#007bff';
+            }
+
+            // Stop the event from propagating
+            event.stopPropagation();
+        });
+
+        // Add a click event to the label to prevent interference with the checkbox
+        checkbox.nextElementSibling.addEventListener('click', function (event) {
+            event.stopPropagation();
+        });
+    });
+});
+</script>
+
     <br>
     <?php include('footer.php'); ?>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 </html>

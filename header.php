@@ -13,7 +13,7 @@ function getCategories($mysqli, $parent_id = NULL)
         $category = array(
             'id' => $row['category_id'],
             'name' => $row['category_name'],
-            'subcategories' => getCategories($mysqli, $row['category_id']) // Recursive call for subcategories
+            'subcategories' => getCategories($mysqli, $row['category_id'])
         );
 
         $categories[] = $category;
@@ -22,19 +22,16 @@ function getCategories($mysqli, $parent_id = NULL)
     return $categories;
 }
 
-// Establish database connection
-$mysqli = connectDatabase();  // Make sure to replace this line with your database connection code
 
-// Get main categories
+$mysqli = connectDatabase(); 
+
+
 $mainCategories = getCategories($mysqli);
 
-// Close database connection
+
 $mysqli->close();
 
-// Rest of your HTML and PHP code...
 ?>
-
-
 
     <style>
         .navbar {
@@ -114,12 +111,12 @@ $mysqli->close();
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <?php
-                // Loop through main categories
+                
                 foreach ($mainCategories as $mainCategory) {
                     echo '<li class="nav-item dropdown">';
                     echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">' . $mainCategory['name'] . '</a>';
                     echo '<ul class="dropdown-menu">';
-                    // Loop through subcategories
+                    
                     foreach ($mainCategory['subcategories'] as $subcategory) {
                         echo '<li><a class="dropdown-item" href="collection.php?id=' . $subcategory['id'] . '">' . $subcategory['name'] . '</a></li>';
                     }
@@ -134,7 +131,7 @@ $mysqli->close();
             <li class="nav-item" data-toggle="tooltip"   title="Log Out">
                 <?php
                 if (isset($_SESSION['user_id'])) {
-                    // User is logged in, show logout icon
+                    
                     echo '<a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
                 }
                 ?>
@@ -150,8 +147,6 @@ $mysqli->close();
                 <input id="search-input" type="text" placeholder="Search" style="display: none;">
             </div>
             </li>
-
-
 
 
             <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="cart">
@@ -174,10 +169,10 @@ $mysqli->close();
             <li class="nav-item" data-toggle="tooltip" title="login"  >
                 <?php
                 if (isset($_SESSION['user_id'])) {
-                    // User is logged in, show user profile icon
+                    
                     echo '<a class="nav-link" data-placement="bottom" title="profile" href="profile.php"><i class="fas fa-user"></i></a>';
                 } else {
-                    // User is not logged in, show login icon
+                    
                     echo '<a class="nav-link" data-placement="bottom" title="login" href="login.php"><i class="fas fa-sign-in-alt"></i></a>';
                 }
                 ?>
@@ -185,7 +180,6 @@ $mysqli->close();
 
         </ul>
                     
-
     </div>
 </nav>
 

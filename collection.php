@@ -54,7 +54,7 @@
     }
  
 
-    include('config.php'); 
+
     $mysqli = connectDatabase();
 
     $categoriesQuery = "SELECT category_id, category_name FROM categories";

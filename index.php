@@ -80,25 +80,25 @@
     }
 
     #third-1{       
-        width: 930px;     
+        width: 630px;     
         border-radius: 10px 10px;
         
     }
 
     #third-2{      
-        width: 930px;
+        width: 630px;
         margin-left: 30px;
         border-radius: 10px 10px;
         
     }
 
     #third-3{       
-        width: 930px;    
+        width: 630px;    
         border-radius: 10px 10px;
     }   
 
     #third-4{     
-        width: 930px; 
+        width: 630px; 
         margin-left: 30px;
         border-radius: 10px 10px;
 
@@ -166,8 +166,7 @@
         border: none;
         color: #000; /* Set the color as needed */
     }
-    
-    
+      
 </style>
 </head>
 <body>

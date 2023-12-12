@@ -33,7 +33,7 @@ session_start();
 
     // Handle form submission
     if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-        $username = $_POST["name"];
+        $username = $_POST["username"];
         $email = $_POST["email"];
         $password = $_POST["password"];
         $confirmPassword = $_POST["confirmPassword"];
@@ -58,7 +58,7 @@ session_start();
             header("Location: signup.php?showAlert=passwordless6");
             exit();
         }
-
+  
         // Validate if passwords match
         if ($password != $confirmPassword) {
             // Redirect to signup page with showAlert parameter for password mismatch
@@ -70,7 +70,7 @@ session_start();
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         // Insert user data into the database
-        $sql = "INSERT INTO users (user_id ,name, email, password) VALUES ('$username', '$email', '$hashedPassword')";
+        $sql = "INSERT INTO users (name, email, password) VALUES ('$username', '$email', '$hashedPassword')";
 
         if (mysqli_query($conn, $sql)) {
             // Redirect to signup page with showAlert parameter for success
@@ -128,7 +128,6 @@ session_start();
 <body>
     <?php include('header.php') ?>
 
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-9">
@@ -147,11 +146,11 @@ session_start();
 
                     <div class="form-group">
                         <label for="name">Username</label>
-                        <input type="text" class="form-control"  name="name" required>
+                        <input type="text" class="form-control"  name="username" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control"  required>
+                        <input type="email" class="form-control" name="email"  required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -177,11 +176,11 @@ session_start();
     <?php include('footer.php') ?>
  c
     <script>
-        // console.log("Script is running");
+        
 
         $(document).ready(function () {
 
-            $(document).on('change keyup', '#password', function () {
+            $(document).on('change keyup', 'input[name="password"]', function () {
                 checkPasswordStrength($(this).val().trim())
             })
 
@@ -192,7 +191,7 @@ session_start();
 
             function checkPasswordMatch(){
 
-                var password = $('#password').val();
+                var password = $('input[name="password"]').val();
                 var confirmPassword = $('#confirmPassword').val();
 
                 if (password !== confirmPassword) {
@@ -214,10 +213,6 @@ session_start();
             var alphabets = /([a-zA-Z])/;
             var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
             $('#password-strength-status').show()
-
-            // var icon1 = "<i class='fa-solid fa-face-flushed'></i>";
-            // var icon2 = "<box-icon name='smile' ></box-icon>";
-            // var icon3 = "<box-icon name='happy-beaming'></box-icon>";
 
             if (password.length < 6) {
                 $('#password-strength-status').removeClass();
@@ -242,8 +237,6 @@ session_start();
             }
         }
     </script>
-
-
 </body>
 
 </html>

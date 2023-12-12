@@ -126,7 +126,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         h1 {
             text-align: center;
             font-size: 29px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            margin-top: 10px;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 

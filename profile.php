@@ -71,7 +71,7 @@ include('adminsidebar.php');
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
      
-    <title>Profile</title>
+    <title>My profile</title>
 
 
      <style>
@@ -80,20 +80,35 @@ include('adminsidebar.php');
             background-color:#0F0E0E;
         }   
         .card{
-            border-radius: 30px 20px;
+            border-radius: 10px ;
             color: #FEF7DC;
             background-color: #2C3333;
             width: auto;
             text-align: left;           
         }
 
-        #profileImg{
-            width: 150px;
+        #profileImg {
+            width: 180px;
+            height: auto;
             border-radius: 30px 30px;
+            display: block; /* Ensure that the image is treated as a block element */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         #userprofile{
             font-family: poppins, sans-serif;
+        }
+
+        #profileBtn{
+            border-radius: 20px;
+            font-family: poppins, sans-serif;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #profileBtn:hover{
+            transform: scale(1.2);
+            background-color: #2C3333;
         }
 
         
@@ -136,7 +151,10 @@ include('adminsidebar.php');
                             } else {
                                 echo 'No user data found.';
                             }
-                            ?>
+                            ?><form action="edit.php">
+                                <button id="profileBtn" class="btn btn-dark">Edit Profile</button>
+                            </form>
+                            
                         </div>
                     </div>
                 </div>

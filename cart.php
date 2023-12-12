@@ -227,6 +227,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: grey;
         }
 
+        #cartSize{
+            font-family: poppins , sans-serif;
+            font-style: oblique;
+            font-size: small;
+            margin-top: 20px;
+            color: grey;
+        }
+
         #removeCartbtn{
             margin-top: 20px;
             border-radius: 20px 20px;
@@ -273,20 +281,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo '<div class="cart-item">';
                     echo '<img src="./images/' . $item['image_path'] . '" alt="Product Image">';
                     echo '<div class="cart-item-details">';
-                    echo '<p>Name: ' . $item['item_name'] . '</p>';
-                    echo '<p>Price: RM ' . $item['price'] . '</p>';
-                    echo '<p>Size: ' . implode(', ', $item['size']) . '</p>';
+                    echo '<p> ' . $item['item_name'] . '</p>';
+                    echo '<p> RM ' . $item['price'] . '</p>';
+                    
                     echo '<div class="quantity-tools">';
                     echo '<label for="quantity' . $index . '">Quantity</label>';
                     echo '<button onclick="decrementQuantity(\'quantity' . $index . '\')">-</button>';
                     echo '<input type="number" id="quantity' . $index . '" name="quantity' . $index . '" value="1" min="1">';
                     echo '<button onclick="incrementQuantity(\'quantity' . $index . '\')">+</button> ';                  
                     echo '</div>';
+                    echo '<p id="cartSize"> Size: ' . implode(', ', $item['size']) . '</p>';
+                    echo '<p id="cartDate" >Date Added: ' . (isset($item['date_added']) ? $item['date_added'] : 'N/A') . '</p>';
                     echo '<form  method="post" action="">';
                     echo '<button class= "btn btn" id="removeCartbtn" type="submit" name="remove' . $item['item_id'] . '">Remove</button>';
                     echo '</form>';
-                    echo '<p id="cartDate" >Date Added: ' . (isset($item['date_added']) ? $item['date_added'] : 'N/A') . '</p>';
-                    echo '<a href="details.php">Details</a>';
+                    // echo '<a href="details.php">Details</a>';
+                    
                     echo '</div>';
                     echo '</div>';
                 }
