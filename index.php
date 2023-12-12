@@ -15,13 +15,6 @@
 
     <style>
     
-   
-
-    /* body,html{  */
-        /* background-image: url('https://lh6.googleusercontent.com/proxy/PfqBs77OlpRjgytCHPXHLWBN1avDDXQxk9yJB10Gw2PrHpRd0aQAXNGdbzStMW_ewsSf4aY1aL8XDePZ7NzC1beWctZAYYf2yQelWA3lNQuIuUHJQBtA2IiQcXcJSKFE=w1200-h630-p-k-no-nu'); */
- 
-        /* background-attachment: fixed; */
-    /* } */
     
     .image-container {
         display: flex; 
@@ -80,27 +73,40 @@
     }
 
     #third-1{       
-        width: 630px;     
+        width: 830px;     
         border-radius: 10px 10px;
+        margin-bottom: 20px;
+        margin-left: 20px;
         
     }
 
     #third-2{      
-        width: 630px;
+        width: 830px;
         margin-left: 30px;
         border-radius: 10px 10px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        
+        
+
         
     }
 
     #third-3{       
-        width: 630px;    
+        width: 830px;    
         border-radius: 10px 10px;
+        margin-left: 20px;
+        
     }   
 
     #third-4{     
-        width: 630px; 
+        width: 830px; 
         margin-left: 30px;
         border-radius: 10px 10px;
+        margin-left: 10px;
+        margin-left: 20px;
+        
 
     }
 
@@ -127,8 +133,8 @@
         border: 3px solid black; 
         border-radius: 10px 10px;
         text-decoration: none;
-        font-weight: 700;
-        font-size: 20px;
+        font-weight: 900;
+        font-size: 40px;
         color: #000; 
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         transition: transform 0.3s ease-in-out;    
@@ -206,14 +212,13 @@ include('header.php');
 </a>
 </div>
 
-
-
     <h3 class="collection">Brothers Collection</h3>
     <div class="image-container brother-collection">
         <img src="https://www.bulanbintangstore.com/wp-content/uploads/2021/05/Flamingo-Pink_SF_22.jpg" alt="Image 1">
         <img src="https://www.bulanbintangstore.com/wp-content/uploads/2021/03/Viridian-Green_BMTF_34-1536x1536.jpg" alt="Image 2">
         <img src="https://www.bulanbintangstore.com/wp-content/uploads/2021/05/Mint-Green_SF_7.jpg" alt="Image 3">
         <img src="https://bulanbintang.onpay.my/media/uploads/lilac.jpg" alt="Image 4">
+        
     </div><br><br><br>
 
     

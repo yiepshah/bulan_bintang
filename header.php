@@ -1,7 +1,6 @@
 <?php
-include('config.php');
 
-// Function to fetch categories and subcategories
+include('config.php');
 function getCategories($mysqli, $parent_id = NULL)
 {
     $query = "SELECT * FROM categories WHERE parent_id " . ($parent_id === NULL ? "IS NULL" : "= $parent_id");
@@ -30,7 +29,6 @@ $mainCategories = getCategories($mysqli);
 
 
 $mysqli->close();
-
 ?>
 
     <style>

@@ -1,19 +1,8 @@
-
 <?php
-
-
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
-// ini_set('log_errors', 1);
-// ini_set('error_log', 'error.log');
-
 session_start();
-
-// var_dump($_SESSION['user_id']);
 
 $userId = $_SESSION['user_id'];
 
-// var_dump($userId);
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -21,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 } 
 
 $query = "SELECT * FROM users WHERE id = ?";
-// echo $query; // Now $query is defined
+
 $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
 
 if ($mysqli->connect_error) {
@@ -37,7 +26,7 @@ if ($stmt === false) {
 $stmt->bind_param("i", $userId);
 
 if (!$stmt->execute()) {
-    // var_dump($stmt->error);
+  
     die('Error executing statement: ' . $stmt->error);
 }
 
@@ -47,9 +36,6 @@ if ($result === false) {
 }
 
 $row = $result->fetch_assoc();
-// echo 'Reached this point';
-// var_dump($row);
-
 
 $result->close();
 
@@ -75,20 +61,25 @@ include('adminsidebar.php');
 
 
      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
         body {
             
             background-color:#0F0E0E;
         }   
         .card{
             border-radius: 10px ;
-            color: #FEF7DC;
+            color: #ffff;
             background-color: #2C3333;
             width: auto;
-            text-align: left;           
+            text-align: left;    
+            margin-top: 150px;   
+            font-family: 'Roboto', sans-serif; 
+            padding: 10px;   
         }
 
         #profileImg {
-            width: 180px;
+            width: 250px;
             height: auto;
             border-radius: 30px 30px;
             display: block; /* Ensure that the image is treated as a block element */
@@ -97,12 +88,12 @@ include('adminsidebar.php');
         }
 
         #userprofile{
-            font-family: poppins, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         #profileBtn{
             border-radius: 20px;
-            font-family: poppins, sans-serif;
+            font-family: 'Roboto', sans-serif;
             transition: transform 0.3s ease-in-out;
         }
 
@@ -111,28 +102,36 @@ include('adminsidebar.php');
             background-color: #2C3333;
         }
 
+        #h3Profile{
+            color: grey;
+        }
+
         
      </style>
 </head>
 <body>
 
 <div class="container mt-3">
+
         <div class="row">
+        
             <div class="col-md-3"></div>
+            
             <div class="col-md-6">
+            <h3 id="h3Profile">Welcome Back !</h3>
                 <div class="card">
                     <div class="card-header">
                         <h2 id="userprofile">User Profile</h2>
                     </div>
-                    <img id="profileImg" src="https://th.bing.com/th/id/OIP.rLve_Yze-hD3DIOwtjDrBgHaKW?rs=1&pid=ImgDetMain" alt="dv">
+                    <img id="profileImg" src="https://uploads-ssl.webflow.com/5e95471ed56b94bd8e14bde6/5ebb7855246215caa927b0b0_user%20feedback%20icons-21.png" alt="dv">
                     <div class="card-body">
                         <div class="profile-info">
                             <?php
-                            // var_dump($row);
+                        
 
                             if ($row !== NULL) {
                                 echo '<div>';
-                                echo '<p><strong>Name:</strong> ' . $row['name'] . '</p>';
+                                echo '<p><strong>Name:</strong> ' . $row['username'] . '</p>';
                                 echo '<p><strong>Email:</strong> ' . $row['email'] . '</p>';
 
                                 if (isset($row['role'])) {
@@ -151,9 +150,10 @@ include('adminsidebar.php');
                             } else {
                                 echo 'No user data found.';
                             }
-                            ?><form action="edit.php">
+                            ?>
+                            <!-- <form action="edit.php">
                                 <button id="profileBtn" class="btn btn-dark">Edit Profile</button>
-                            </form>
+                            </form> -->
                             
                         </div>
                     </div>

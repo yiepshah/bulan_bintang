@@ -1,6 +1,4 @@
 <?php
-
-
 session_start();
 
 ini_set('display_errors', 1);
@@ -18,9 +16,6 @@ $itemDetails = null;
 
 
 $id = isset($_GET['item_id']) ? $_GET['item_id'] : 0;
-
-
-
 
 
 if ($id) {

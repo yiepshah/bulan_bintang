@@ -61,7 +61,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
+
+function calculateTotalPrice()
+{
+    $totalPrice = 0;
+
+    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+        foreach ($_SESSION['cart'] as $item) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        }
+    }
+
+    return $totalPrice;
+}
 ?>
+
 
 
 
@@ -307,16 +321,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
         <div class="cart-totals">
             <div class="cart-total-item">
-                <p>Total: RM 751.90</p>
-                <p>Shipping to Kelantan: RM 20</p>
-                <p>RM 771.90</p>
+            <p>Total: RM <?php echo number_format(calculateTotalPrice(), 2); ?></p>
             </div>
         </div>
 
-        <div class="cart-buttons">
+        <!-- <div class="cart-buttons">
             <form action="">
                 <button id="cart-btn-update" type="submit" name="update_cart" class="btn btn-dark">Update Cart</button>
-            </form>
+            </form> -->
             
             <button id="checkout-btn" type="submit" name="proceed_to_checkout" class="btn btn-dark">Checkout <i class="fas fa-check-double"></i></button>
         </div>
