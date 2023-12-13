@@ -2,7 +2,7 @@
     .footer {
         font-family: poppins, sans-serif;
         font-weight: 500;
-        /* background-color: #F5F5F5; */
+ 
         font-size: smaller;
 
     }

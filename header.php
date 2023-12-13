@@ -1,6 +1,9 @@
 <?php
-include('config.php');
 
+<<<<<<< HEAD
+=======
+include('config.php');
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
 function getCategories($mysqli, $parent_id = NULL)
 {
     $query = "SELECT * FROM categories WHERE parent_id " . ($parent_id === NULL ? "IS NULL" : "= $parent_id");

@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 <?php include('header.php');
 include('adminsidebar.php'); ?>
+=======
+<?php session_start();
+// include('config.php');
+?>
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -289,7 +295,8 @@ include('adminsidebar.php'); ?>
 </head>
 
 <body>
-
+<?php include('header.php');
+include('adminsidebar.php'); ?>
 <div class="w3-sidebar">
     <a href="adminpage.php" class="w3-bar-item w3-button" title="Home"><i class="fa fa-home"></i></a>
     
@@ -297,11 +304,20 @@ include('adminsidebar.php'); ?>
    
     <?php
 
+<<<<<<< HEAD
 //     Check if the user is not logged in or is not an admin, redirect to login page
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit();
 }
+=======
+    // Check if the user is not logged in or is not an admin, redirect to login page
+    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+        header('Location: login.php');
+        exit();
+    }
+    
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
 
 
  

@@ -1,19 +1,8 @@
-
 <?php
-
-
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
-// ini_set('log_errors', 1);
-// ini_set('error_log', 'error.log');
-
 session_start();
-
-// var_dump($_SESSION['user_id']);
 
 $userId = $_SESSION['user_id'];
 
-// var_dump($userId);
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
@@ -21,7 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 } 
 
 $query = "SELECT * FROM users WHERE id = ?";
-// echo $query; // Now $query is defined
+
 $mysqli = new mysqli("localhost", "root", "", "bulan_bintang");
 
 if ($mysqli->connect_error) {
@@ -37,7 +26,7 @@ if ($stmt === false) {
 $stmt->bind_param("i", $userId);
 
 if (!$stmt->execute()) {
-    // var_dump($stmt->error);
+  
     die('Error executing statement: ' . $stmt->error);
 }
 
@@ -47,9 +36,6 @@ if ($result === false) {
 }
 
 $row = $result->fetch_assoc();
-// echo 'Reached this point';
-// var_dump($row);
-
 
 $result->close();
 
@@ -74,7 +60,12 @@ include('adminsidebar.php');
     
 
      <style>
+<<<<<<< HEAD
          @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+=======
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
         body {
             
             background-color:#0F0E0E;
@@ -84,10 +75,17 @@ include('adminsidebar.php');
             color: #ffff;
             background-color: #2C3333;
             width: auto;
+<<<<<<< HEAD
             text-align: left;   
             margin-top: 60px;   
             font-family: 'Roboto', sans-serif; 
                     
+=======
+            text-align: left;    
+            margin-top: 150px;   
+            font-family: 'Roboto', sans-serif; 
+            padding: 10px;   
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
         }
 
         #profileImg {
@@ -100,12 +98,12 @@ include('adminsidebar.php');
         }
 
         #userprofile{
-            font-family: poppins, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         #profileBtn{
             border-radius: 20px;
-            font-family: poppins, sans-serif;
+            font-family: 'Roboto', sans-serif;
             transition: transform 0.3s ease-in-out;
         }
 
@@ -124,10 +122,17 @@ include('adminsidebar.php');
 <body>
 
 <div class="container mt-3">
+
         <div class="row">
+        
             <div class="col-md-3"></div>
+            
             <div class="col-md-6">
+<<<<<<< HEAD
             <!-- <h3 id="h3Profile">Welcome Back !</h3> -->
+=======
+            <h3 id="h3Profile">Welcome Back !</h3>
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
                 <div class="card">
                     <div class="card-header">
                         <h2 id="userprofile">User Profile</h2>
@@ -136,11 +141,11 @@ include('adminsidebar.php');
                     <div class="card-body">
                         <div class="profile-info">
                             <?php
-                            // var_dump($row);
+                        
 
                             if ($row !== NULL) {
                                 echo '<div>';
-                                echo '<p><strong>Name:</strong> ' . $row['name'] . '</p>';
+                                echo '<p><strong>Name:</strong> ' . $row['username'] . '</p>';
                                 echo '<p><strong>Email:</strong> ' . $row['email'] . '</p>';
 
                                 if (isset($row['role'])) {
@@ -162,8 +167,13 @@ include('adminsidebar.php');
                             ?>
                             <!-- <form action="edit.php">
                                 <button id="profileBtn" class="btn btn-dark">Edit Profile</button>
+<<<<<<< HEAD
                             </form>
                              -->
+=======
+                            </form> -->
+                            
+>>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
                         </div>
                     </div>
                 </div>
