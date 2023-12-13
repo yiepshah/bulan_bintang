@@ -1,7 +1,6 @@
 <?php
 include('config.php');
 
-// Function to fetch categories and subcategories
 function getCategories($mysqli, $parent_id = NULL)
 {
     $query = "SELECT * FROM categories WHERE parent_id " . ($parent_id === NULL ? "IS NULL" : "= $parent_id");
@@ -11,8 +10,8 @@ function getCategories($mysqli, $parent_id = NULL)
 
     while ($row = $result->fetch_assoc()) {
         $category = array(
-            'id' => $row['category_id'],
-            'name' => $row['category_name'],
+            'category_id' => $row['category_id'],
+            'category_name' => $row['category_name'],
             'subcategories' => getCategories($mysqli, $row['category_id'])
         );
 
@@ -22,15 +21,9 @@ function getCategories($mysqli, $parent_id = NULL)
     return $categories;
 }
 
-
 $mysqli = connectDatabase(); 
-
-
 $mainCategories = getCategories($mysqli);
-
-
 $mysqli->close();
-
 ?>
 
     <style>
@@ -98,8 +91,6 @@ $mysqli->close();
         }
     </style>
     
-    </style>
-
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="index.php">
@@ -114,18 +105,32 @@ $mysqli->close();
                 
                 foreach ($mainCategories as $mainCategory) {
                     echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">' . $mainCategory['name'] . '</a>';
+                    echo '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">' . $mainCategory['category_name'] . '</a>';
                     echo '<ul class="dropdown-menu">';
-                    
+                
+                    // Subcategories (Level 2)
                     foreach ($mainCategory['subcategories'] as $subcategory) {
-                        echo '<li><a class="dropdown-item" href="collection.php?id=' . $subcategory['id'] . '">' . $subcategory['name'] . '</a></li>';
+                        echo '<li class="dropdown-submenu">';
+                        echo '<a class="dropdown-item dropdown" href="#">' . $subcategory['category_name'] . '</a>';
+                        echo '<ul class="dropdown-menu">';
+                
+                        // Sub-subcategories (Level 3)
+                        foreach ($subcategory['subcategories'] as $subSubcategory) {
+                            echo '<li><a class="dropdown-item" href="collection.php?id=' . $subSubcategory['category_id'] . '">' . $subSubcategory['category_name'] . '</a></li>';
+                        }
+                
+                        echo '</ul>';
+                        echo '</li>';
                     }
+                
                     echo '</ul>';
                     echo '</li>';
                 }
                 ?>
             </ul>
         </div>
+        
+        
         <ul class="navbar-nav ml-auto">
 
             <li class="nav-item" data-toggle="tooltip"   title="Log Out">
@@ -185,14 +190,14 @@ $mysqli->close();
 
    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $('.category-link').on('click', function (e) {
-            e.preventDefault();
-            var categoryId = $(this).data('category-id');
-            window.location.href = 'collection.php?id=' + categoryId;
+    <script>
+        $(document).ready(function () {
+            $('.category-link').on('click', function (e) {
+                e.preventDefault();
+                var categoryId = $(this).data('category-id');
+                window.location.href = 'collection.php?id=' + categoryId;
+            });
         });
-    });
-</script>
-     
+    </script>
+ </body>
+</html>    

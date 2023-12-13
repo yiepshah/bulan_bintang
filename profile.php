@@ -62,7 +62,6 @@ $mysqli->close();
 include('header.php');
 include('adminsidebar.php');
 
-// ob_flush();
 
 ?>
 <!DOCTYPE html>
@@ -72,23 +71,27 @@ include('adminsidebar.php');
     
      
     <title>My profile</title>
-
+    
 
      <style>
+         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
         body {
             
             background-color:#0F0E0E;
         }   
         .card{
             border-radius: 10px ;
-            color: #FEF7DC;
+            color: #ffff;
             background-color: #2C3333;
             width: auto;
-            text-align: left;           
+            text-align: left;   
+            margin-top: 60px;   
+            font-family: 'Roboto', sans-serif; 
+                    
         }
 
         #profileImg {
-            width: 180px;
+            width: 250px;
             height: auto;
             border-radius: 30px 30px;
             display: block; /* Ensure that the image is treated as a block element */
@@ -111,6 +114,10 @@ include('adminsidebar.php');
             background-color: #2C3333;
         }
 
+        #h3Profile{
+            color: grey;
+        }
+
         
      </style>
 </head>
@@ -120,11 +127,12 @@ include('adminsidebar.php');
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
+            <!-- <h3 id="h3Profile">Welcome Back !</h3> -->
                 <div class="card">
                     <div class="card-header">
                         <h2 id="userprofile">User Profile</h2>
                     </div>
-                    <img id="profileImg" src="https://th.bing.com/th/id/OIP.rLve_Yze-hD3DIOwtjDrBgHaKW?rs=1&pid=ImgDetMain" alt="dv">
+                    <img id="profileImg" src="https://uploads-ssl.webflow.com/5e95471ed56b94bd8e14bde6/5ebb7855246215caa927b0b0_user%20feedback%20icons-21.png" alt="dv">
                     <div class="card-body">
                         <div class="profile-info">
                             <?php
@@ -151,10 +159,11 @@ include('adminsidebar.php');
                             } else {
                                 echo 'No user data found.';
                             }
-                            ?><form action="edit.php">
+                            ?>
+                            <!-- <form action="edit.php">
                                 <button id="profileBtn" class="btn btn-dark">Edit Profile</button>
                             </form>
-                            
+                             -->
                         </div>
                     </div>
                 </div>

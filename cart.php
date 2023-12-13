@@ -26,6 +26,19 @@ function removeFromCart($productId)
     return false;
 }
 
+function calculateTotalPrice()
+{
+    $totalPrice = 0;
+
+    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+        foreach ($_SESSION['cart'] as $item) {
+            $totalPrice += $item['price'] * $item['quantity'];
+        }
+    }
+
+    return $totalPrice;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'quantity') !== false) {
@@ -90,16 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 10px; 
         }
 
-        /* header {
-            background-color: #1F2937;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        } */
 
         .content {
             padding: 20px;           
@@ -193,14 +196,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            
         }
 
-        .cart-total-item p {
-       
+        .cart-total-item p {       
             margin-bottom: 5px;
         }
 
         .cart-buttons {
             width: 100%;
-            display: flex;
+            
             justify-content: space-between;
             margin-top: 20px;          
         }
@@ -307,16 +309,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
         <div class="cart-totals">
             <div class="cart-total-item">
-                <p>Total: RM 751.90</p>
-                <p>Shipping to Kelantan: RM 20</p>
-                <p>RM 771.90</p>
+            <p>Total: RM <?php echo number_format(calculateTotalPrice(), 2); ?></p>
             </div>
         </div>
 
-        <div class="cart-buttons">
+        <!-- <div class="cart-buttons">
             <form action="">
                 <button id="cart-btn-update" type="submit" name="update_cart" class="btn btn-dark">Update Cart</button>
-            </form>
+            </form> -->
             
             <button id="checkout-btn" type="submit" name="proceed_to_checkout" class="btn btn-dark">Checkout <i class="fas fa-check-double"></i></button>
         </div>

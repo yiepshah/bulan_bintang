@@ -1,5 +1,3 @@
-
-
 <?php include('header.php');
 include('adminsidebar.php'); ?>
 <!DOCTYPE html>
@@ -288,7 +286,6 @@ include('adminsidebar.php'); ?>
 
 
 
-
 </head>
 
 <body>
@@ -300,7 +297,7 @@ include('adminsidebar.php'); ?>
    
     <?php
 
-    // Check if the user is not logged in or is not an admin, redirect to login page
+//     Check if the user is not logged in or is not an admin, redirect to login page
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header('Location: login.php');
     exit();

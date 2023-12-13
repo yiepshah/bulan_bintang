@@ -38,20 +38,40 @@
     }
 
     
-    if (isset($_GET['id'])) {
-        $categoryId = (int)$_GET['id'];
-    
-        $stmt = $mysqli->prepare("SELECT * FROM posts WHERE category_id = ?");
-        $stmt->bind_param("i", $categoryId);
-        $stmt->execute();
-        $result = $stmt->get_result();
-    
-        $items = array();
-    
-        while ($row = $result->fetch_assoc()) {
-            $items[] = $row;
-        }
+// Check if the category ID is set in the URL
+if (isset($_GET['id'])) {
+    $categoryId = (int)$_GET['id'];
+
+    // Debug: Print or log the received category ID
+    echo "Selected Category ID: $categoryId";
+
+    // Prepare and execute the SQL query to get items for the specified category
+    $stmt = $mysqli->prepare("SELECT posts.* FROM posts
+                              JOIN categories ON posts.category_id = categories.category_id
+                              WHERE posts.category_id = ? OR categories.parent_id = ?");
+    $stmt->bind_param("ii", $categoryId, $categoryId);
+    $stmt->execute();
+
+    // Debug: Print or log the SQL query
+    $sqlQuery = "SELECT posts.* FROM posts
+                 JOIN categories ON posts.category_id = categories.category_id
+                 WHERE posts.category_id = $categoryId OR categories.parent_id = $categoryId";
+    echo "SQL Query: $sqlQuery";
+
+    $result = $stmt->get_result();
+
+    // Check if the query executed successfully
+    if (!$result) {
+        die("Error: " . $mysqli->error);
     }
+
+    // Fetch items for the specified category or its subcategories
+    $items = array();
+    while ($row = $result->fetch_assoc()) {
+        $items[] = $row;
+    }
+}
+
  
 
 
@@ -124,7 +144,7 @@
         } 
 
         .item:hover img {
-            -webkit-filter: grayscale(1) blur(5px);
+            -webkit-filter: grayscale(1) blur(2px);
             filter: grayscale(1) blur(3px); 
         }
 
@@ -204,6 +224,34 @@
             }
         }
 
+        .categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.category-card {
+    width: calc(32% - 20px);
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.category-link {
+    text-decoration: none;
+    color: black;
+}
+
+.category-card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1.0);
+}
+
         
     </style>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -219,28 +267,35 @@
 </head>
 
 <body>
-    <?php include('header.php'); ?>
-    <div class="items-container">
+<?php include('header.php'); ?>
+
+<div class="items-container">
     <?php
-    foreach ($items as $index => $item) {
-        echo '<div class="item">';
-        echo '<a id="detail" href="details.php?item_id=' . $item['item_id'] . '">';
-        echo '<figure>';
+        foreach ($items as $index => $item) {
+            echo '<div class="item">';
+            echo '<a id="detail" href="details.php?item_id=' . $item['item_id'] . '">';
+            echo '<figure>';
             echo '<img src="./images/' . $item['image_path'] . '" alt="' . $item['item_name'] . '">';
             echo '</figure>';
-        echo '<p>' . $item['item_name'] . '</p>';
-        echo '<p id=itemprice >$' . $item['price'] . '</p>';
-        echo '<div class="add-to-cart">
-                <button onclick="addToCart(' . $item['item_id'] . ', \'' . $item['item_name'] . '\', ' . $item['price'] . ')">
-                    Add to Cart <i class="fas fa-cart-plus"></i>
-                </button>
-            </div>';
-        echo '</a></div>';
-    }
-    ?>
-</div>
+            echo '<p>' . $item['item_name'] . '</p>';
+            echo '<p id=itemprice >$' . $item['price'] . '</p>';
+            echo '<div class="add-to-cart">
+                    <button onclick="addToCart(' . $item['item_id'] . ', \'' . $item['item_name'] . '\', ' . $item['price'] . ')">
+                        Add to Cart <i class="fas fa-cart-plus"></i>
+                    </button>
+                </div>';
+            echo '</a></div>';
+        }
+        ?>
+    </div>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+
+
+
+
+
+
     <script>
         $(document).ready(function () {
         

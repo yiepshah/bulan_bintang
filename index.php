@@ -80,28 +80,39 @@
     }
 
     #third-1{       
-        width: 630px;     
+        width: 830px;     
         border-radius: 10px 10px;
+        margin-bottom: 20px;
+        margin-left: 20px;
         
     }
 
     #third-2{      
-        width: 630px;
+        width: 830px;
         margin-left: 30px;
         border-radius: 10px 10px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        margin-left: 20px;
+        
+        
+
         
     }
 
     #third-3{       
-        width: 630px;    
+        width: 830px;    
         border-radius: 10px 10px;
+        margin-left: 20px;
+        
     }   
 
     #third-4{     
-        width: 630px; 
+        width: 830px; 
         margin-left: 30px;
         border-radius: 10px 10px;
-
+        margin-left: 10px;
+        margin-left: 20px;       
     }
 
     .boutique{
