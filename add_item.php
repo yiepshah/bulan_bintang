@@ -23,8 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     $product_information = $_POST["product_information"];
     $material = $_POST["material"];
     $inside_box = $_POST["inside_box"];
+    $category_id = $_POST["category_id"];
 
-    // File upload handling
+ 
     $target_dir = "C:/xampp/htdocs/bulan_bintang/images/";
     $imageFileName = $_FILES["image_path"]["name"];
     $filename = time() . '_' . $imageFileName;
@@ -61,22 +62,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         if (move_uploaded_file($_FILES["image_path"]["tmp_name"], $target_file)) {
             echo "The file " . basename($_FILES["image_path"]["name"]) . " has been uploaded.";
 
-            // Insert data into database
-            $sql = "INSERT INTO posts (image_path, item_name, price, product_information, material, inside_box) 
-            VALUES (?, ?, ?, ?, ?, ?)";
+           
+            $sql = "INSERT INTO posts (image_path, item_name, price, product_information, material, inside_box, category_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    
 
             $stmt = mysqli_prepare($conn, $sql);
 
             if ($stmt) {
-                mysqli_stmt_bind_param($stmt, "ssssss", $filename, $item_name, $price, $product_information, $material, $inside_box);
+                mysqli_stmt_bind_param($stmt, "ssssssi", $filename, $item_name, $price, $product_information, $material, $inside_box, $category_id);
+
+
 
                 if (mysqli_stmt_execute($stmt)) {
                     echo "Item added successfully.";
 
-                    // Display the uploaded image
+                    
                     $imagePath = './images/' . $filename;
                     if (file_exists($imagePath)) {
-                        echo '<img src="' . $imagePath . '" alt="' . $item_name . '">';
+                        // echo '<img src="' . $imagePath . '" alt="' . $item_name . '">';
                     } else {
                         echo 'Image not found!';
                     }
@@ -115,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
             box-shadow: 0 0 20px rgba(0, 0, 0, .2);
             background: transparent;
             color:#ffff; 
-            /* backdrop-filter: blur(10px);      */
+            
             border-radius: 10px 10px;
             border: none;
             margin-top: 30px;
@@ -211,8 +215,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                     </div><br>
 
                     <div class="form-group">
-                        <label for="inside_box">What's Inside the Box:</label>
+                        <label for="inside_box">Inside Box:</label>
                         <input type="text" class="form-control" name="inside_box" id="inside_box" required>
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="category_id">Category ID:</label>
+                        <input type="number" class="form-control" name="category_id" id="category_id" required>
+                    </div><br>
+
+                    <div class="form-group">
                         <button id="addbtn" class="btn" name="submit" type="submit">Add</button>
                     </div><br><br>                  
                 </form>

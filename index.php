@@ -105,13 +105,7 @@
         margin-left: 30px;
         border-radius: 10px 10px;
         margin-left: 10px;
-<<<<<<< HEAD
         margin-left: 20px;       
-=======
-        margin-left: 20px;
-        
-
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
     }
 
     .boutique{

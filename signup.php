@@ -33,7 +33,7 @@ session_start();
 
     // Handle form submission
     if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-        $username = $_POST["username"];
+        $username = $_POST["name"];
         $email = $_POST["email"];
         $password = $_POST["password"];
         $confirmPassword = $_POST["confirmPassword"];
@@ -41,39 +41,38 @@ session_start();
         // Validate username
         if (strlen($username) < 6) {
             // Redirect to signup page with showAlert parameter for password mismatch
-            header("Location: signup.php?showAlert=username");
+            header("Location: signup.php?showAlert=name");
             exit();
         }
 
         // Validate email format
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Redirect to signup page with showAlert parameter for password mismatch
+           
             header("Location: signup.php?showAlert=wrongformatemail");
             exit();
         }
 
-        // Validate password length
+      
         if (strlen($password) < 6) {
-            // Redirect to signup page with showAlert parameter for password mismatch
+
             header("Location: signup.php?showAlert=passwordless6");
             exit();
         }
   
-        // Validate if passwords match
+
         if ($password != $confirmPassword) {
-            // Redirect to signup page with showAlert parameter for password mismatch
+
             header("Location: signup.php?showAlert=passwordMismatch");
             exit();
         }
 
-        // Hash the password (recommended for security)
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-        // Insert user data into the database
-        $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashedPassword')";
+       
+        $sql = "INSERT INTO users (name, email, password) VALUES ('$username', '$email', '$hashedPassword')";
 
         if (mysqli_query($conn, $sql)) {
-            // Redirect to signup page with showAlert parameter for success
+            
             header("Location: login.php?showAlert=signupSuccess");
             exit();
         } else {
@@ -146,7 +145,7 @@ session_start();
 
                     <div class="form-group">
                         <label for="name">Username</label>
-                        <input type="text" class="form-control"  name="username" required>
+                        <input type="text" class="form-control"  name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>

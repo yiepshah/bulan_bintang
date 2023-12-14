@@ -1,12 +1,11 @@
 <?php
-
-<<<<<<< HEAD
-=======
+// session_start();
 include('config.php');
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
+
+
 function getCategories($mysqli, $parent_id = NULL)
 {
-    $query = "SELECT * FROM categories WHERE parent_id " . ($parent_id === NULL ? "IS NULL" : "= $parent_id");
+    $query = "SELECT * FROM categories WHERE parent_id " . ($parent_id == NULL ? "IS NULL" : "= $parent_id");
     $result = $mysqli->query($query);
 
     $categories = array();
@@ -114,7 +113,7 @@ $mysqli->close();
                     // Subcategories (Level 2)
                     foreach ($mainCategory['subcategories'] as $subcategory) {
                         echo '<li class="dropdown-submenu">';
-                        echo '<a class="dropdown-item dropdown" href="#">' . $subcategory['category_name'] . '</a>';
+                        echo '<a class="dropdown-item dropdown" href="collection.php?id=' . $subcategory['category_id'] . '">' . $subcategory['category_name'] . '</a>';
                         echo '<ul class="dropdown-menu">';
                 
                         // Sub-subcategories (Level 3)
@@ -145,9 +144,14 @@ $mysqli->close();
                 ?>
             </li> 
 
-            <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="admin">
-                <a class="nav-link" href="adminpage.php"><i class="fas fa-user-tie"></i></a>
+            <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="admin">
+                <?php
+                if (isset($_SESSION['user_id']) || (!empty($_SESSION['role']) && $_SESSION['role'] !== 'admin')) {
+                    echo '<a class="nav-link" href="adminpage.php"><i class="fas fa-user-tie"></i></a>';
+                }
+                ?>
             </li>
+
 
             <li class="nav-item" data-toggle="tooltip"  data-placement="bottom" title="search">
             <div class="search--box">

@@ -46,7 +46,11 @@ $stmt->close();
 $mysqli->close();
 
 include('header.php');
-include('adminsidebar.php');
+
+
+if ($row !== NULL && isset($row['role']) && $row['role'] === 'admin') {
+    include('adminsidebar.php');
+}
 
 
 ?>
@@ -60,12 +64,7 @@ include('adminsidebar.php');
     
 
      <style>
-<<<<<<< HEAD
          @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-=======
-        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
         body {
             
             background-color:#0F0E0E;
@@ -75,17 +74,10 @@ include('adminsidebar.php');
             color: #ffff;
             background-color: #2C3333;
             width: auto;
-<<<<<<< HEAD
             text-align: left;   
             margin-top: 60px;   
             font-family: 'Roboto', sans-serif; 
                     
-=======
-            text-align: left;    
-            margin-top: 150px;   
-            font-family: 'Roboto', sans-serif; 
-            padding: 10px;   
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
         }
 
         #profileImg {
@@ -128,11 +120,7 @@ include('adminsidebar.php');
             <div class="col-md-3"></div>
             
             <div class="col-md-6">
-<<<<<<< HEAD
             <!-- <h3 id="h3Profile">Welcome Back !</h3> -->
-=======
-            <h3 id="h3Profile">Welcome Back !</h3>
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
                 <div class="card">
                     <div class="card-header">
                         <h2 id="userprofile">User Profile</h2>
@@ -145,7 +133,7 @@ include('adminsidebar.php');
 
                             if ($row !== NULL) {
                                 echo '<div>';
-                                echo '<p><strong>Name:</strong> ' . $row['username'] . '</p>';
+                                echo '<p><strong>Name:</strong> ' . $row['name'] . '</p>';
                                 echo '<p><strong>Email:</strong> ' . $row['email'] . '</p>';
 
                                 if (isset($row['role'])) {
@@ -167,13 +155,8 @@ include('adminsidebar.php');
                             ?>
                             <!-- <form action="edit.php">
                                 <button id="profileBtn" class="btn btn-dark">Edit Profile</button>
-<<<<<<< HEAD
                             </form>
                              -->
-=======
-                            </form> -->
-                            
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
                         </div>
                     </div>
                 </div>

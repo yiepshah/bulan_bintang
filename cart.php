@@ -1,18 +1,18 @@
 <?php
-
 session_start();
 
+
 function updateQuantity($productId, $newQuantity)
-{   
-    if(isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-        // var_dump($_SESSION['cart']);
-        foreach ($_SESSION['cart'] as & $cartItem) {
+{
+    if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as &$cartItem) {
             if ($cartItem['item_id'] == $productId) {
                 $cartItem['quantity'] = $newQuantity;
                 return true;
             }
         }
-    }    return false;
+    }
+    return false;
 }
 
 function removeFromCart($productId)
@@ -39,55 +39,56 @@ function calculateTotalPrice()
     return $totalPrice;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    foreach ($_POST as $key => $value) {
-        if (strpos($key, 'quantity') !== false) {
-            $productId = str_replace('quantity', '', $key);
-            $newQuantity = intval($value);
-            updateQuantity($productId, $newQuantity);
-        } elseif (strpos($key, 'remove') !== false) {
-            $productId = str_replace('remove', '', $key);
-            removeFromCart($productId);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Check if the remove button is clicked
+    foreach ($_SESSION['cart'] as $index => $cartItem) {
+        $removeButtonName = 'remove' . $cartItem['item_id'];
+        if (isset($_POST[$removeButtonName])) {
+            // Remove the item from the cart
+            removeFromCart($cartItem['item_id']);
         }
     }
 
-    if (isset($_POST['add_to_cart'])) {
+    if (isset($_POST['update_quantity'])) {
         $productId = isset($_POST['item_id']) ? $_POST['item_id'] : 0;
-        $productName = isset($_POST['item_name']) ? $_POST['item_name'] : '';
-        $productPrice = isset($_POST['price']) ? $_POST['price'] : '';
-        $productImage = isset($_POST['image_path']) ? $_POST['image_path'] : '';
-        $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
-    
-        $productExists = updateQuantity($productId, 1);
-    
-        if (!$productExists) {
-            $currentDateTime = date("Y-m-d H:i:s");
-            $_SESSION['cart'][] = array(
-                'image_path' => $productImage,
-                'item_id' => $productId,
-                'item_name' => $productName,
-                'price' => $productPrice,
-                'size' => $selectedSizes,
-                'quantity' => 1,
-                'date_added' => $currentDateTime,
-            );
-        }
+        $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : 0;
+        updateQuantity($productId, $quantity);
     }
 }
 
-function calculateTotalPrice()
-{
-    $totalPrice = 0;
+if (isset($_POST['add_to_cart'])) {
+    $productId = isset($_POST['item_id']) ? $_POST['item_id'] : 0;
+    $productName = isset($_POST['item_name']) ? $_POST['item_name'] : '';
+    $productPrice = isset($_POST['price']) ? $_POST['price'] : '';
+    $productImage = isset($_POST['image_path']) ? $_POST['image_path'] : '';
+    $selectedSizes = isset($_POST['size']) ? $_POST['size'] : array();
 
-    if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-        foreach ($_SESSION['cart'] as $item) {
-            $totalPrice += $item['price'] * $item['quantity'];
+    $productExists = false;
+    foreach ($_SESSION['cart'] as &$cartItem) {
+        if ($cartItem['item_id'] == $productId && $cartItem['size'] == $selectedSizes) {
+            $cartItem['quantity'] += 1;
+            $productExists = true;
+            break;
         }
     }
 
-    return $totalPrice;
+    if (!$productExists) {
+        $currentDateTime = date("Y-m-d H:i:s");
+        $_SESSION['cart'][] = array(
+            'image_path' => $productImage,
+            'item_id' => $productId,
+            'item_name' => $productName,
+            'price' => $productPrice,
+            'size' => $selectedSizes,
+            'quantity' => 1,
+            'date_added' => $currentDateTime,
+        );
+    }
 }
 ?>
+
+
+
 
 
 
@@ -124,7 +125,7 @@ function calculateTotalPrice()
 
         .content {
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             padding: 20px;
             display: flex;
@@ -290,6 +291,7 @@ function calculateTotalPrice()
     <div class="content">
         
         <div class="cart-container">
+
             <?php
             if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                 $reversedCart = array_reverse($_SESSION['cart']);
@@ -298,21 +300,21 @@ function calculateTotalPrice()
                     echo '<img src="./images/' . $item['image_path'] . '" alt="Product Image">';
                     echo '<div class="cart-item-details">';
                     echo '<p> ' . $item['item_name'] . '</p>';
-                    echo '<p> RM ' . $item['price'] . '</p>';
+                    echo '<p> RM ' . $item['price'] . '</p>';                
                     
                     echo '<div class="quantity-tools">';
                     echo '<label for="quantity' . $index . '">Quantity</label>';
                     echo '<button onclick="decrementQuantity(\'quantity' . $index . '\')">-</button>';
-                    echo '<input type="number" id="quantity' . $index . '" name="quantity' . $index . '" value="1" min="1">';
-                    echo '<button onclick="incrementQuantity(\'quantity' . $index . '\')">+</button> ';                  
+                    echo '<input type="number" id="quantity' . $index . '" name="quantity' . $index . '" value="' . $item['quantity'] . '" min="1" oninput="updateCartItemQuantity(' . $index . ')">';
+                    echo '<button onclick="incrementQuantity(\'quantity' . $index . '\')">+</button>';
+                    echo '<span id="quantityDisplay' . $index . '"> x' . $item['quantity'] . '</span>';
                     echo '</div>';
+                    
                     echo '<p id="cartSize"> Size: ' . implode(', ', $item['size']) . '</p>';
                     echo '<p id="cartDate" >Date Added: ' . (isset($item['date_added']) ? $item['date_added'] : 'N/A') . '</p>';
                     echo '<form  method="post" action="">';
-                    echo '<button class= "btn btn" id="removeCartbtn" type="submit" name="remove' . $item['item_id'] . '">Remove</button>';
+                    echo '<button class= "btn btn" id="removeCartbtn" type="submit" name="remove' . $item['item_id'] . '">Remove</button><br><br>';
                     echo '</form>';
-                    // echo '<a href="details.php">Details</a>';
-                    
                     echo '</div>';
                     echo '</div>';
                 }
@@ -355,29 +357,43 @@ function calculateTotalPrice()
         }
     </script>
 
-    <script>
+    
 
-function addToCart(productId, productName, productPrice, selectedSizes) {
-    console.log('Adding to cart:', productId, productName, productPrice, selectedSizes);
+<script>
+function updateCartItemQuantity(index) {
+    var quantity = $('#quantity' + index).val();
+    var productId = <?php echo $reversedCart[$index]['item_id']; ?>;
 
     $.ajax({
         type: 'POST',
         url: 'cart.php',
         data: {
-            add_to_cart: 1,
+            update_quantity: 1,
             item_id: productId,
-            item_name: productName,
-            price: productPrice,
-            size: selectedSizes
+            quantity: quantity
         },
         success: function (response) {
+            // You can handle the response if needed
             console.log(response);
-            
         },
         error: function () {
             alert('Error in the AJAX request.');
         }
     });
+}
+
+function incrementQuantity(inputId) {
+    var input = document.getElementById(inputId);
+    input.value = parseInt(input.value) + 1;
+    updateCartItemQuantity(inputId.replace('quantity', ''));
+}
+
+function decrementQuantity(inputId) {
+    var input = document.getElementById(inputId);
+    if (parseInt(input.value) > 1) {
+        input.value = parseInt(input.value) - 1;
+        updateCartItemQuantity(inputId.replace('quantity', ''));
+    }
 }
 </script>
 </body>

@@ -1,23 +1,20 @@
-<<<<<<< HEAD
-<?php include('header.php');
+<?php
+session_start();
+include('header.php');
 include('adminsidebar.php'); ?>
-=======
-<?php session_start();
-// include('config.php');
-?>
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
-<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Admin Dashboard</title>
 
 
-    
+
     <style>
         body {
             margin: 0;
@@ -65,7 +62,7 @@ include('adminsidebar.php'); ?>
             color: #333;
         }
 
-        .w3-sidebar:hover + .main--content {
+        .w3-sidebar:hover+.main--content {
             margin-left: 200px;
         }
 
@@ -248,9 +245,7 @@ include('adminsidebar.php'); ?>
             background-color: #f2f2f2;
         }
 
-        .edit-button
-         {
-                        
+        #editItembtn {
             color: #000;
             border: none;
             padding: 8px 12px;
@@ -261,7 +256,7 @@ include('adminsidebar.php'); ?>
             margin-bottom: 10px;
         }
 
-        .delete-button {
+        #deleteItembtn {
             border: none;
             color: #000;
             border: none;
@@ -271,21 +266,22 @@ include('adminsidebar.php'); ?>
             margin-right: 5px;
             transition: transform 0.3s ease-in-out;
 
-            
+
         }
 
-        .edit-button:hover{
+        #editItembtn:hover {
             background-color: #352F44;
             border: none;
             transform: scale('1.2');
         }
-        .delete-button:hover {
+
+        #deleteItembtn{
             background-color: #BB2525;
             border: none;
-            transform: scale('1.1');
+            transform: scale('1.3');
         }
 
-        #profileimg{
+        #profileimg {
             margin-left: 6px;
         }
     </style>
@@ -295,29 +291,38 @@ include('adminsidebar.php'); ?>
 </head>
 
 <body>
-<?php include('header.php');
-include('adminsidebar.php'); ?>
-<div class="w3-sidebar">
-    <a href="adminpage.php" class="w3-bar-item w3-button" title="Home"><i class="fa fa-home"></i></a>
-    
-    <a href="collection.php" class="w3-bar-item w3-button" title="Store"><i class="fas fa-store"></i></a>
-   
-    <?php
 
-<<<<<<< HEAD
-//     Check if the user is not logged in or is not an admin, redirect to login page
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    <div class="w3-sidebar">
+        <a href="adminpage.php" class="w3-bar-item w3-button" title="Home"><i class="fa fa-home"></i></a>
+
+        <a href="collection.php" class="w3-bar-item w3-button" title="Store"><i class="fas fa-store"></i></a>
+
+        <?php
+
+
+include 'config.php'; // Include your database connection file
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userId = $_POST['userId'];
+
+    // Perform the deletion
+    $deleteQuery = "DELETE FROM users WHERE id = $userId";
+    $result = $mysqli->query($deleteQuery);
+
+    if ($result) {
+        echo "success";
+    } else {
+        echo "error: " . $mysqli->error;
+    }
+} else {
+    echo "Invalid request";
+}
+
+
+if (!isset($_SESSION['user_id']) || (!empty($_SESSION['role']) && $_SESSION['role'] !== 'admin')) {
     header('Location: login.php');
     exit();
 }
-=======
-    // Check if the user is not logged in or is not an admin, redirect to login page
-    if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-        header('Location: login.php');
-        exit();
-    }
-    
->>>>>>> 042a33036962de0341db9bcc2dae6796430671bf
 
 
  
@@ -328,132 +333,279 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     if (isset($_SESSION['user_id'])) {
         echo '<a class="nav-link" title="Log out" href="logout.php"><i class="fas fa-sign-out-alt"></i></a>';
     }
+
+    $mysqli = connectDatabase(); 
+
+$selectUserQuery = "SELECT * FROM users ORDER BY id DESC";
+$userResult = $mysqli->query($selectUserQuery);
+
+if ($userResult && $userResult->num_rows > 0) {
+    while ($userRow = $userResult->fetch_assoc()) {
+      
+    }
+} else {
+    echo "<tr><td colspan='4'>No users found</td></tr>";
+}
     ?>
 
-</div>
-
-
-<div class="main--content">
-    <div class="header--wrapper">
-        <div class="header--title">
-            <span>Primary</span>
-            <h2>dashboard</h2>
-        </div>
-        <div class="user--info">
-            <div class="search--box">
-                <i class="fa-solid fa-search"></i>
-                <input id="myInput" type="text" placeholder="Search">
-            </div>          
-        </div>
     </div>
 
-    <div class="card-container">
-        <h2 class="main--title">Today's data</h2>
-        <div class="card--wrapper">
-            <div class="data--card sales">
-                <div class="card--header">
-                    <div class="amount">
-                        <span class="title">Sales</span><span class="amount-value">$40 000.00</span>
-                    </div> <i class="fas-dollar-sign icon"></i>
-                    <span class="card-detail">Last 24 hours</span>
-                </div>
-            </div>
-            <div class="data--card online-payment">
-                <div class="card--header">
-                    <div class="amount">
-                        <span class="title">Online Payment</span><span class="amount-value">$2900.00</span>
-                    </div> <i class="fas-dollar-sign icon"></i>
-                    <span class="card-detail">Last 24 hours</span>
-                </div>
-            </div>
-            <div class="data--card expenses">
-                <div class="card--header">
-                    <div class="amount">
-                        <span class="title">Expenses</span><span class="amount-value">$5000.00</span>
-                    </div> <i class="fas-dollar-sign icon"></i>
-                    <span class="card-detail">Last 24 hours</span>
-                </div>
-            </div>
-            <div class="data--card new-customers">
-                <div class="card--header">
-                    <div class="amount">
-                        <span class="title">New Customers</span><span class="amount-value">90</span>
-                    </div> <i class="fas-dollar-sign icon"></i>
-                    <span class="card-detail">Last 24 hours</span>
-                </div>
-            </div>
-        </div> <hr> 
 
 
-        <div class="stock-table-container">
-            <h2 class="main--title">Update Stocks</h2>
-            <div class="table-responsive">
-                <table class="stock-table table table-striped">
+
+    <div class="main--content">
+        <div class="header--wrapper">
+            <div class="header--title">
+                <span>Primary</span>
+                <h2>dashboard</h2>
+            </div>
+            <div class="user--info">
+                <div class="search--box">
+                    <i class="fa-solid fa-search"></i>
+                    <input id="myInput" type="text" placeholder="Search">
+                </div>
+            </div>
+        </div>
+
+        <div class="card-container">
+            <h2 class="main--title">Today's data</h2>
+            <div class="card--wrapper">
+                <div class="data--card sales">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">Sales</span><span class="amount-value">$40 000.00</span>
+                        </div> <i class="fas-dollar-sign icon"></i>
+                        <span class="card-detail">Last 24 hours</span>
+                    </div>
+                </div>
+                <div class="data--card online-payment">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">Online Payment</span><span class="amount-value">$2900.00</span>
+                        </div> <i class="fas-dollar-sign icon"></i>
+                        <span class="card-detail">Last 24 hours</span>
+                    </div>
+                </div>
+                <div class="data--card expenses">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">Expenses</span><span class="amount-value">$5000.00</span>
+                        </div> <i class="fas-dollar-sign icon"></i>
+                        <span class="card-detail">Last 24 hours</span>
+                    </div>
+                </div>
+                <div class="data--card new-customers">
+                    <div class="card--header">
+                        <div class="amount">
+                            <span class="title">New Customers</span><span class="amount-value">90</span>
+                        </div> <i class="fas-dollar-sign icon"></i>
+                        <span class="card-detail">Last 24 hours</span>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+
+            <div class="user-table-container">
+        <h2 class="main--title">User Information</h2>
+        <div class="table-responsive">
+            <table class="stock-table table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Item Name</th>
-                        <th>Price</th>
-                        <th>Material</th>
-                        <th>Product Information</th>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
                         <th>Action</th>
                     </tr>
                 </thead>
-            <tbody id="myItemtable">
-            <?php
+                <tbody id="myUsertable">
+                    <?php
+                    $selectUserQuery = "SELECT * FROM users ORDER BY id DESC";
+                    $userResult = $mysqli->query($selectUserQuery);
+
+                    if ($userResult && $userResult->num_rows > 0) {
+                        while ($userRow = $userResult->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $userRow['id'] . "</td>";
+                            echo "<td contenteditable='true' onBlur='updateUser(this, " . $userRow['id'] . ", \"name\")' onClick='editUser(this)'>" . $userRow['name'] . "</td>";
+                            echo "<td contenteditable='true' onBlur='updateUser(this, " . $userRow['id'] . ", \"email\")' onClick='editUser(this)'>" . $userRow['email'] . "</td>";
+                            echo "<td>";
+                            echo "<button class='btn btn-dark' onclick='deleteUser(" . $userRow['id'] . ")'>Delete</button><br><br>";
+                            echo "<button class='btn btn-dark' onclick='submitUser(" . $userRow['id'] . ")'>Submit</button>";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4'>No users found</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 
-$mysqli = connectDatabase();
-
-$selectQuery = "SELECT * FROM posts ORDER BY item_id DESC"; 
-$result = $mysqli->query($selectQuery);
-?>
-
-
-<?php
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row['item_name'] . "</td>";
-        echo "<td>$" . $row['price'] . "</td>";
-        echo "<td>" . $row['material'] . "</td>";
-        echo "<td>" . (isset($row['product_information']) ? htmlspecialchars($row['product_information']) : "") . "</td>";
-        echo "<td>";
-        echo "<button class='edit-button' onclick='editItem(" . $row['item_id'] . ")'>Edit</button>";     
-        echo "<button class='delete-button' onclick='confirmDelete(" . $row['item_id'] . ")'>Remove</button>";
-        echo "</td>";
-        echo "</tr>";
+<div class="stock-table-container">
+    <h2 class="main--title">Update Stocks</h2>
+    <div class="table-responsive">
+        <table class="stock-table table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Material</th>
+                    <th>Product Information</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+<tbody id="myItemtable">
+    <?php
+    $mysqli = connectDatabase();
+    $selectQuery = "SELECT * FROM posts ORDER BY item_id DESC"; 
+    $result = $mysqli->query($selectQuery);
+    
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row['item_name'] . "</td>";
+            echo "<td>$" . $row['price'] . "</td>";
+            echo "<td>" . $row['material'] . "</td>";
+            echo "<td>" . (isset($row['product_information']) ? htmlspecialchars($row['product_information']) : "") . "</td>";
+            echo "<td>";
+            echo "<button class='btn btn-dark' onclick='editItem(" . $row['item_id'] . ")'>Edit</button>";     
+            echo "<button class='btn btn-dark' onclick='deleteUser(" . $userRow['id'] . ")'>Delete</button><br><br>";
+            echo "</td>";
+            echo "</tr>";
+        }
+    } else {
+        echo "<tr><td colspan='5'>No items found</td></tr>";
     }
-} else {
-    echo "<tr><td colspan='5'>No items found</td></tr>";
-}
 
-$mysqli->close();
-?>
+    $mysqli->close();
+    ?>
+</tbody>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myItemtable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(
+                        value) > -1)
+                });
+            });
+        });
+    </script>
 
 <script>
-    function confirmDelete(itemId) {
+        function editUser(element) {
+          
+            element.style.backgroundColor = "#ffffcc";
+        }
+
+        function updateUser(element, userId, field) {
+            
+            element.style.backgroundColor = "";
+
+           
+            var updatedValue = element.innerText.trim();
+
+
+            $.ajax({
+                type: "POST",
+                url: "update_user.php", 
+                data: {
+                    userId: userId,
+                    field: field,
+                    value: updatedValue
+                },
+                success: function (response) {
+                 
+                    if (response === "success") {
+                        Swal.fire("Success!", "User data updated.", "success");
+                    } else {
+                        Swal.fire("Error!", "Failed to update user data.", "error");
+                    }
+                }
+            });
+        }
+
+        function deleteUser(userId) {
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                type: "POST",
+                url: "delete_user.php",
+                data: {
+                    userId: userId
+                },
+                success: function (response) {
+                   
+                    if (response === "success") {
+                        Swal.fire("Deleted!", "User has been deleted.", "success");
+                       
+                        location.reload();
+                    } else {
+                        Swal.fire("Error!", "Failed to delete user. " + response, "error");
+                        console.error(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    Swal.fire("Error!", "Failed to delete user. " + error, "error");
+                    console.error(error); 
+                }
+            });
+        }
+    });
+}
+    </script>
+
+    <script>
+$.ajax({
+    type: "POST",
+    url: "adminpage.php",
+    data: {
+        userId: userId,
+        field: field,
+        value: updatedValue
+    },
+    success: function (response) {
+      
+        if (response === "success") {
+            Swal.fire("Success!", "User data updated.", "success");
+        } else {
+            Swal.fire("Error!", "Failed to update user data. " + response, "error");
+            console.error(response);
+        }
+    },
+    error: function (xhr, status, error) {
+        Swal.fire("Error!", "Failed to update user data. " + error, "error");
+        console.error(error);
+    }
+});
+    </script>
+
+<script>
+    function confirmDeleteItem(itemId) {
         var confirmDelete = confirm("Are you sure you want to delete this item?");
         if (confirmDelete) {
-            
-            window.location.href = "delete_item.php?id=" + itemId;
+            window.location.href = "adminpage.php?id=" + itemId;
         }
     }
 
     function editItem(itemId) {
-        
-        window.location.href = "edit_item.php?id=" + itemId;
+        window.location.href = "adminpage.php?id=" + itemId;
     }
 </script>
 
-<script>
-        $(document).ready(function(){
-            $("#myInput").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("#myItemtable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-            });
-    </script>
 </body>
-

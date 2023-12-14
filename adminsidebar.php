@@ -57,12 +57,11 @@
 <body>
 <div class="w3-sidebar">
     <a href="adminpage.php" class="w3-bar-item w3-button" title="Home"><i class="fa fa-home"></i></a>
-    <a href="#" class="w3-bar-item w3-button" title="Search"><i class="fa fa-search"></i></a>
+    
     <a href="collection.php" class="w3-bar-item w3-button" title="Store"><i class="fas fa-store"></i></a>
-    <a href="#" class="w3-bar-item w3-button" title="Global"><i class="fa fa-globe"></i></a>
+   
     <?php
 
-    
     if (isset($_SESSION['user_id'])) {
         echo '<a class="nav-link" title="Add Item" href="add_item.php"><i class="fas fa-plus"></i></a>';
     }

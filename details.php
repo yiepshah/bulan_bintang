@@ -42,13 +42,13 @@ if ($id) {
     
 
 
-if ($result->num_rows > 0) {
-    $itemDetails = $result->fetch_assoc();
-    $breadcrumb = '<a href="home.php">Home</a> / ';
-    $breadcrumb .= '<a href="category.php">Baju Melayu Slim Fit</a> / ';
-    $breadcrumb .= '<span>' . $itemDetails['item_name'] . '</span>';
-    ?>
-    <?php include ('header.php') ?>
+    if ($result->num_rows > 0) {
+        $itemDetails = $result->fetch_assoc();
+        $breadcrumb = '<a href="home.php">Home</a> / ';
+        $breadcrumb .= '<a href="category.php">Baju Melayu Slim Fit</a> / ';
+        $breadcrumb .= '<span>' . $itemDetails['item_name'] . '</span>';
+        ?>
+        <?php include ('header.php') ?>
     
         <div class="details-container">
             <div class="row">
@@ -60,7 +60,7 @@ if ($result->num_rows > 0) {
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent pl-0">
                             <li class="breadcrumb-item"><a href="index.php">HOME</a></li>
-                            <li class="breadcrumb-item"><a href="category.php">BAJU MELAYU</a></li>
+                            <li class="breadcrumb-item"><a href="collection.php">BAJU MELAYU</a></li>
                             <li class="breadcrumb-item active" aria-current="page">BM TAILORED FIT</li>
                         </ol>
                     </nav>
@@ -91,7 +91,9 @@ if ($result->num_rows > 0) {
                             <input type="hidden" name="item_name" value="<?php echo $itemDetails['item_name']; ?>">
                             <input type="hidden" name="image_path" value="<?php echo $itemDetails['image_path']; ?>">
                             <input type="hidden" name="price" value="<?php echo $itemDetails['price']; ?>">
+                            <input type="number" id="quantity<?php echo $index; ?>" name="quantity<?php echo $index; ?>" value="<?php echo $item['quantity']; ?>" min="1" oninput="updateCartItemQuantity('<?php echo $item['item_id']; ?>', this.value)">
                             <input type="hidden" name="size[]" value="<?php echo isset($_POST['size']) ? implode(',', $_POST['size']) : ''; ?>">
+                            
                             <button id="button" class="btn btn-btn" type="submit">Add to Cart</button>
                             <a href="javascript:void(0);" onclick="clearPage()" class="clear-link">Clear</a>
                         </form>
@@ -145,7 +147,7 @@ if ($result->num_rows > 0) {
     }
 
     
-    $stmt->close();
+    $stmt->close(); 
 }
 
 
@@ -318,7 +320,7 @@ function clearPage() {
 </script>
 
 <script>
-    function addToCartFromSize(productId, productName, productPrice, selectedSize) {
+    function addToCartFromSize(productId, productName, productPrice, selectedSize, itemQuantity ) {
         $.ajax({
             type: 'POST',
             url: 'cart.php',
@@ -328,11 +330,13 @@ function clearPage() {
                 item_name: productName,
                 price: productPrice,
                 size: [selectedSize],
+                Quantitiy:itemQuantity,
+
                 
             },
             success: function (response) {
                 console.log(response);
-                // You can update the cart summary or display a success message here
+                
             },
             error: function () {
                 alert('Error in the AJAX request.');
@@ -342,30 +346,62 @@ function clearPage() {
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    var sizeCheckboxes = document.querySelectorAll('.size-checkbox');
+    function addToCart() {
+    var selectedSize = document.querySelector('.size-checkbox:checked');
 
-    sizeCheckboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function (event) {
-            if (this.checked) {
-                this.nextElementSibling.style.backgroundColor = '#007bff';
-                this.nextElementSibling.style.color = '#fff';
-            } else {
-                this.nextElementSibling.style.backgroundColor = 'transparent';
-                this.nextElementSibling.style.color = '#007bff';
-            }
+    if (!selectedSize) {
+        alert('Please select a size before adding to cart.');
+        return;
+    }
 
-            // Stop the event from propagating
-            event.stopPropagation();
-        });
+   
+    document.getElementById('addToCartForm').submit();
+}
 
-        // Add a click event to the label to prevent interference with the checkbox
-        checkbox.nextElementSibling.addEventListener('click', function (event) {
-            event.stopPropagation();
-        });
-    });
-});
 </script>
+
+<!-- Add/update the following JavaScript code in details.php -->
+<script>
+    function updateCartItemQuantity(productId, newQuantity) {
+        $.ajax({
+            type: 'POST',
+            url: 'cart.php',
+            data: {
+                update_quantity: 1,
+                item_id: productId,
+                quantity: newQuantity
+            },
+            success: function (response) {
+                // You can handle the response if needed
+                console.log(response);
+                updateCartSummary(); // Update cart summary if needed
+            },
+            error: function () {
+                alert('Error in the AJAX request.');
+            }
+        });
+    }
+
+    function incrementQuantity(inputId, productId) {
+        var input = document.getElementById(inputId);
+        input.value = parseInt(input.value) + 1;
+        updateCartItemQuantity(productId, input.value);
+    }
+
+    function decrementQuantity(inputId, productId) {
+        var input = document.getElementById(inputId);
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+            updateCartItemQuantity(productId, input.value);
+        }
+    }
+
+    // You can add more functions or modify existing ones as needed
+</script>
+
+
+
+
 
     <br>
     <?php include('footer.php'); ?>
